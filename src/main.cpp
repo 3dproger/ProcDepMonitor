@@ -7,10 +7,10 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
     //Application information
-    QApplication::setApplicationName("ProcDepMonitor");
+    QApplication::setApplicationName("Process Dependency Monitor");
     QApplication::setOrganizationName("3dproger");
     QApplication::setOrganizationDomain("https://github.com/3dproger");
-    QApplication::setApplicationVersion("1.0.0");
+    QApplication::setApplicationVersion("1.0.1");
 
     MainWindow w;
     w.show();

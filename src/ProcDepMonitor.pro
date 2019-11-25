@@ -5,9 +5,6 @@
 #-------------------------------------------------
 
 QT       += core gui
-win32{
-    QT += winextras
-}
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 

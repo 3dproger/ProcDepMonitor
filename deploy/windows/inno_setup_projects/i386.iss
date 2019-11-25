@@ -2,9 +2,11 @@
 [Setup]
 
 ; App name
-#define   Name       "ProcDepMonitor"
+#define   Name       "Process Dependency Monitor"
+; App short name
+#define   NameShort  "ProcDepMonitor"
 ; App version
-#define   Version    "1.0.0"
+#define   Version    "1.0.1"
 ; Author        
 #define   Publisher  "3dproger"
 ; Author URL
@@ -49,20 +51,36 @@ SetupIconFile="main_icon.ico"
 DisableWelcomePage=false
 
 ; Output filename
-OutputBaseFileName={#Name}-{#Version}-win32
+OutputBaseFileName={#NameShort}-{#Version}-win32
                                                 
 [Languages]
-Name: en; MessagesFile: "compiler:Default.isl";
-Name: ru; MessagesFile: "compiler:Languages\Russian.isl";
+Name: en; MessagesFile: "compiler:Default.isl"; LicenseFile: "../../../LICENSE" 
+Name: am; MessagesFile: "compiler:Languages\Armenian.isl"; LicenseFile: "../../../LICENSE" 
+Name: br; MessagesFile: "compiler:Languages\BrazilianPortuguese.isl"; LicenseFile: "../../../LICENSE" 
+Name: ad; MessagesFile: "compiler:Languages\Catalan.isl"; LicenseFile: "../../../LICENSE"
+Name: cz; MessagesFile: "compiler:Languages\Czech.isl"; LicenseFile: "../../../LICENSE"
+Name: dk; MessagesFile: "compiler:Languages\Danish.isl"; LicenseFile: "../../../LICENSE"
+Name: nl; MessagesFile: "compiler:Languages\Dutch.isl"; LicenseFile: "../../../LICENSE"
+Name: fi; MessagesFile: "compiler:Languages\Finnish.isl"; LicenseFile: "../../../LICENSE"
+Name: fr; MessagesFile: "compiler:Languages\French.isl"; LicenseFile: "../../../LICENSE" 
+Name: de; MessagesFile: "compiler:Languages\German.isl"; LicenseFile: "../../../LICENSE" 
+Name: il; MessagesFile: "compiler:Languages\Hebrew.isl"; LicenseFile: "../../../LICENSE"
+Name: is; MessagesFile: "compiler:Languages\Icelandic.isl"; LicenseFile: "../../../LICENSE"
+Name: it; MessagesFile: "compiler:Languages\Italian.isl"; LicenseFile: "../../../LICENSE"
+Name: jp; MessagesFile: "compiler:Languages\Japanese.isl"; LicenseFile: "../../../LICENSE"  
+Name: no; MessagesFile: "compiler:Languages\Norwegian.isl"; LicenseFile: "../../../LICENSE" 
+Name: pl; MessagesFile: "compiler:Languages\Polish.isl"; LicenseFile: "../../../LICENSE"
+Name: pt; MessagesFile: "compiler:Languages\Portuguese.isl"; LicenseFile: "../../../LICENSE"
+Name: ru; MessagesFile: "compiler:Languages\Russian.isl"; LicenseFile: "../../../LICENSE" 
+Name: si; MessagesFile: "compiler:Languages\Slovenian.isl"; LicenseFile: "../../../LICENSE" 
+Name: es; MessagesFile: "compiler:Languages\Spanish.isl"; LicenseFile: "../../../LICENSE"
+Name: tr; MessagesFile: "compiler:Languages\Turkish.isl"; LicenseFile: "../../../LICENSE"
+Name: ua; MessagesFile: "compiler:Languages\Ukrainian.isl"; LicenseFile: "../../../LICENSE"
 
-; Licenses
-;Name: en; MessagesFile: "compiler:Default.isl"; LicenseFile: "License_ENG.txt"    
-;Name: ru; MessagesFile: "compiler:Languages\Russian.isl"; LicenseFile: "License_RUS.txt"
-
-
-[Messages]
-ru.BeveledLabel=Russian
-en.BeveledLabel=English
+; what is this for?
+;[Messages]
+;ru.BeveledLabel=Russian
+;en.BeveledLabel=English
 
 [Icons]
 Name: "{group}\{#Name}"; Filename: "{app}\{#ExeName}"
