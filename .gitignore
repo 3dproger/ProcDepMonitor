@@ -1,0 +1,11 @@
+build
+build*
+
+deploy/windows/i386/appdir/*
+deploy/windows/amd64/appdir/*
+deploy/windows/inno_setup_projects/Output*
+
+deploy/unix/i386/appdir/*
+deploy/unix/amd64/appdir/*
+
+*.pro.user
