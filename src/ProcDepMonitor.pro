@@ -41,6 +41,13 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp
 
+unix {
+HEADERS += \
+        Linux/LinuxWrapper.hpp
+
+SOURCES += \
+        Linux/LinuxWrapper.cpp
+}
 
 win32 {
         LIBS += -lpsapi

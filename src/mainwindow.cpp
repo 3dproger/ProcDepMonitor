@@ -138,6 +138,12 @@ void MainWindow::onPidSelected(int64_t pid)
             break;
         }
 
+        if (!dep.valid){
+            textColor = QColor(255, 0, 0);
+            if (itemName->text().isEmpty()) { itemName->setText(tr("<unknown>")); }
+            if (itemPath->text().isEmpty()) { itemPath->setText(tr("<unknown>")); }
+        }
+
         if (textColor.isValid())
         {
             itemName->setTextColor(textColor);

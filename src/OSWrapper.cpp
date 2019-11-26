@@ -1,13 +1,17 @@
 #include "OSWrapper.hpp"
-#ifdef Q_OS_WIN32
+#if defined (Q_OS_WIN32)
 #include "Windows/Win32Wrapper.hpp"
+#elif defined(Q_OS_LINUX)
+#include "Linux/LinuxWrapper.hpp"
 #endif
 
 OSWrapper &OSWrapper::instance()
 {
     //It is signleton
-    #ifdef Q_OS_WIN32
+    #if defined (Q_OS_WIN32)
     static Win32Wrapper instance;
+    #elif defined(Q_OS_LINUX)
+    static LinuxWrapper instance;
     #else
     qFatal("This OS is not yet supported");
     static OSWrapper instance;
@@ -29,6 +33,7 @@ OSProcessInfo OSWrapper::processByPID(int64_t)
 
 bool OSWrapper::sortOSProcessInfo(const OSProcessInfo &info1, const OSProcessInfo &info2)
 {
+    //By canGetDependencies
     if (info1.canGetDependencies && !info2.canGetDependencies)
     {
         return true;
@@ -39,9 +44,27 @@ bool OSWrapper::sortOSProcessInfo(const OSProcessInfo &info1, const OSProcessInf
     }
     else if (!info1.canGetDependencies && !info2.canGetDependencies)
     {
+        #ifdef Q_OS_UNIX
+        //By first chat '[' for UNIX only
+        if (!info1.name.isEmpty() && !info2.name.isEmpty())
+        {
+            if (info1.name.at(0) == '[' && info2.name.at(0) != '[')
+            {
+                return false;
+            }
+            else if (info1.name.at(0) != '[' && info2.name.at(0) == '[')
+            {
+                return true;
+            }
+        }
+        #endif
+
         return info1.id < info2.id;
     }
 
+
+
+    //By name
     #ifdef Q_OS_WIN32
         return info1.name.toLower() < info2.name.toLower();
     #else
@@ -57,8 +80,18 @@ bool OSWrapper::sortOSProcessDependence(const OSProcessDependence &dep1, const O
     }
 
     #ifdef Q_OS_WIN32
-        return dep1.name.toLower() < dep2.name.toLower();
+    if (dep1.fileName.toLower() != dep2.fileName.toLower())
+    {
+        return dep1.fileName.toLower() < dep2.fileName.toLower();
+    }
+
+    return dep1.name.toLower() < dep2.name.toLower();
     #else
-        return dep1.name < dep2.name;
+    if (dep1.fileName != dep2.fileName)
+    {
+        return dep1.fileName < dep2.fileName;
+    }
+
+    return dep1.name < dep2.name;
     #endif
 }
