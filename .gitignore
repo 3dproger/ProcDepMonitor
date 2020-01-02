@@ -8,4 +8,4 @@ deploy/windows/inno_setup_projects/Output*
 deploy/unix/i386/appdir/*
 deploy/unix/amd64/appdir/*
 
-*.pro.user
+*.pro.user*

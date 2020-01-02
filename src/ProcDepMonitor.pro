@@ -54,11 +54,13 @@ win32 {
         QMAKE_CXXFLAGS += "-DPSAPI_VERSION=1" # ToDo: check it
         HEADERS += \
                 Windows/Win32Wrapper.hpp \
-                Windows/tasklistmanager.h
+                Windows/tasklistmanager.h \
+                Windows/ToolHelpManager.hpp \
 
         SOURCES += \
                 Windows/Win32Wrapper.cpp \
-                Windows/tasklistmanager.cpp
+                Windows/tasklistmanager.cpp \
+                Windows/ToolHelpManager.cpp
 }
 
 FORMS += \

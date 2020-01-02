@@ -2,7 +2,7 @@
 [Setup]
 
 ; App name
-#define   Name       "Process Dependency Monitor"
+#define   Name       "Process Dependency Monitor (x64)"
 ; App short name
 #define   NameShort  "ProcDepMonitor"
 ; App version
@@ -15,10 +15,10 @@
 #define   ExeName    "ProcDepMonitor.exe"
 
 ; Generated from Tools -> Generate GUID
-AppId={{69CE5F3C-A869-4FA6-967A-C18E0A01578F}
+AppId={{69CE5F3C-A869-4FA6-967A-C18E0A01578F}_x64
 
 ; Uncomment if need x64 only
-; ArchitecturesInstallIn64BitMode=x64
+ ArchitecturesInstallIn64BitMode=x64
 
 ; Compression parameters
 Compression=lzma2
@@ -51,7 +51,7 @@ SetupIconFile="main_icon.ico"
 DisableWelcomePage=false
 
 ; Output filename
-OutputBaseFileName={#NameShort}-{#Version}-win32
+OutputBaseFileName={#NameShort}-{#Version}-win64
                                                 
 [Languages]
 Name: en; MessagesFile: "compiler:Default.isl"; LicenseFile: "../../../LICENSE" 
@@ -93,5 +93,5 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 
 [Files]
 ;Input files
-Source: "..\i386\appdir\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "..\amd64\appdir\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 

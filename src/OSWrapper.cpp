@@ -1,6 +1,7 @@
 #include "OSWrapper.hpp"
 #if defined (Q_OS_WIN32)
-#include "Windows/Win32Wrapper.hpp"
+//#include "Windows/Win32Wrapper.hpp"
+#include "Windows/ToolHelpManager.hpp"
 #elif defined(Q_OS_LINUX)
 #include "Linux/LinuxWrapper.hpp"
 #endif
@@ -9,7 +10,8 @@ OSWrapper &OSWrapper::instance()
 {
     //It is signleton
     #if defined (Q_OS_WIN32)
-    static Win32Wrapper instance;
+    static ToolHelpManager instance;
+    //static Win32Wrapper instance;
     #elif defined(Q_OS_LINUX)
     static LinuxWrapper instance;
     #else
