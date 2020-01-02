@@ -13,6 +13,8 @@ public:
     bool getIsAdministrator() const;
 
 private:
+    OSProcessInfo _processByPID(int64_t pid);
+
     QList<OSProcessInfo> _processes;
 
     void addDep(QList<OSProcessDependence>& list, const OSProcessDependence& dep);

@@ -102,9 +102,11 @@ void MainWindow::onPidSelected(int64_t pid)
     ui->tableWidgetResult->clearContents();
     ui->tableWidgetResult->setRowCount(0);
 
-    qDebug() << "Selected PID:" << pid;
-
     OSProcessInfo info = OSWrapper::instance().processByPID(pid);
+
+    qDebug() << "Process ID:" << info.id << ", Process Name:" << info.name;
+
+
 
     setWindowTitle(
                 QString("%1 - [%2 (%3)]")

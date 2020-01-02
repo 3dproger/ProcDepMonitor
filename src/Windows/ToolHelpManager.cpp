@@ -49,7 +49,7 @@ QList<OSProcessInfo> ToolHelpManager::getProcesses()
 
     for (const TaskListManager::Task& task : tasks)
     {
-        OSProcessInfo info = processByPID(uint32_t(task.processId));
+        OSProcessInfo info = _processByPID(uint32_t(task.processId));
 
         if (info.name.isEmpty())
         {
@@ -65,6 +65,27 @@ QList<OSProcessInfo> ToolHelpManager::getProcesses()
 }
 
 OSProcessInfo ToolHelpManager::processByPID(int64_t pid)
+{
+    OSProcessInfo info = _processByPID(pid);
+
+    if (info.name.isEmpty())
+    {
+        const QList<TaskListManager::Task>& tasks = TaskListManager::getList();
+
+        for (const TaskListManager::Task& task : tasks)
+        {
+            if (task.processId == info.id)
+            {
+                info.name = task.processName;
+                break;
+            }
+        }
+    }
+
+    return info;
+}
+
+OSProcessInfo ToolHelpManager::_processByPID(int64_t pid)
 {
     OSProcessInfo info;
 
