@@ -3,8 +3,11 @@ Comfortable cross-platform process dependency monitor with GUI based on Qt. Usef
 
 During development a template was used: [TemplateQtWidgets](https://github.com/3dproger/TemplateQtWidgets)
 
-![Alt text](misc/screenshot2.png?raw=true "Linux version")
-
-![Alt text](misc/screenshot1.png?raw=true "Windows version")
-
+<p align="center">
+  <br>
+  <img src="misc/screenshot2.png">
+  <br>
+  <br>
+  <img src="misc/screenshot1.png">
+</p>
 
