@@ -5,7 +5,7 @@ During development a template was used: [TemplateQtWidgets](https://github.com/3
 
 <p align="center">
   <br>
-  <img src="misc/screenshot2.png">
+  <img src="misc/screenshot-linux-1.png">
   <br>
   <br>
   <img src="misc/screenshot1.png">
