@@ -7,5 +7,7 @@ deploy/windows/inno_setup_projects/Output*
 
 deploy/unix/i386/appdir/*
 deploy/unix/amd64/appdir/*
-
+deploy/unix/linuxdeployqt/Process_Dependency_Monitor*.AppImage
 *.pro.user*
+
+

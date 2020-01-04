@@ -1,0 +1,13 @@
+[Desktop Entry]
+Name=Process Dependency Monitor
+GenericName=Retrieving information about loaded process dependencies
+GenericName[ru]=Получение информации о загруженных зависимостях процесса
+Comment=Сross-platform program with GUI for obtaining information about loaded process dependencies
+Comment[ru]=Кроссплатформенная программа с графическим пользовательским интерфейсом для получения информации о загруженных зависимостей процессов
+Exec=procdepmonitor %F
+Icon=procdepmonitor
+Terminal=false
+Type=Application
+Categories=Development;
+Keywords=Dependence;Deployment;Deploy;Assembly;Compilation;Process;Monitor;Monitoring;Software;Development;Programming;
+Keywords[ru]=Зависимость;Развёртывание;Сборка;Компиляция;Процесс;Монитор;Мониторинг;Программа;Разработка;Программирование;

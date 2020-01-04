@@ -1,0 +1,105 @@
+#!/bin/bash
+
+#Версия программы
+export VERSION="1.1.1"
+
+#Указываем архитектуру
+export ARCH="x86_64"
+
+#Путь к qmake
+QMakeExecutable="${HOME}/Qt/5.12.6/gcc_64/bin/qmake"
+
+echo "Version: \"$VERSION\""
+AppName="procdepmonitor"
+AppDir="../amd64/appdir"
+IconsDir="icons"
+
+TargetBinaryDir="$AppDir/usr/bin"
+TargetBinary="$TargetBinaryDir/$AppName"
+DesktopFile="app.desktop"
+DesktopFileTargetDir="$AppDir/usr/share/applications"
+DesktopFileTarget="$DesktopFileTargetDir/$AppName.desktop"
+#ResCommonDir="../../deploy/desktop/RelatedFiles/common"
+#ResCommonUnixDir="../../deploy/desktop/RelatedFiles/unix/x86_64"
+LibTargetDir="$AppDir/usr/lib"
+
+#Проверяем наличие qmake
+if [ ! -f "$QMakeExecutable" ]; then
+  echo "Error: \"${QMakeExecutable}\" not found. Can not continue."
+  exit 1
+fi
+
+#Проверяем наличие папки с программой
+if [ ! -d "$AppDir" ]; then
+  echo "Error: \"${AppDir}\" not found. Can not continue."
+  exit 1
+fi
+
+#ToDo: возможно стиот добавить скрипт для очистки старых файлов
+
+#Копируем из папки common
+#if [ -d "$ResCommonDir" ]; then
+#  cp -rf "$ResCommonDir/." "$TargetBinaryDir/"
+#else
+#  echo "Warning: \"${ResCommonDir}\" not found!"
+#fi
+
+#Копируем из обще папки для всех систем
+#if [ -d "$ResCommonDir" ]; then
+#  cp -rf "$ResCommonDir/." "$TargetBinaryDir/"
+#else
+#  echo "Warning: \"${ResCommonDir}\" not found!"
+#fi
+
+#Копируем из общей папки для unix
+#if [ -d "$ResCommonUnixDir" ]; then
+#  cp -rf "$ResCommonUnixDir/." "$TargetBinaryDir/"
+#else
+#  echo "Warning: \"${ResCommonUnixDir}\" not found!"
+#fi
+
+#Удаляем старую иконку
+if [ -f "$AppDir/$AppName.png" ]; then
+  rm "$AppDir/$AppName.png"
+fi
+
+#Копируем иконки
+if [ ! -d "$IconsDir" ]; then
+  echo "Warning: \"${IconsDir}\" not found!"
+fi
+
+mkdir -p "$AppDir/usr/share"
+
+cp -rf "$IconsDir" "$AppDir/usr/share"
+
+#Удаляем старую ненужную ссылку AppRun
+if [ -L "$AppDir/AppRun" ]; then
+  rm "$AppDir/AppRun"
+fi
+
+#Удаляем старый ненужный *.desktop файл
+if [ -f "$AppDir/$AppName.desktop" ]; then
+  rm "$AppDir/$AppName.desktop"
+fi
+
+#Копируем *.desktop
+if [ -f "$DesktopFile" ]; then
+  mkdir -p "$DesktopFileTargetDir"
+  cp -f "$DesktopFile" "$DesktopFileTargetDir/$AppName.desktop"
+else
+  echo "Warning: \"${DesktopFile}\" not found!"
+fi
+
+#Копируем SSL библиотеки
+#mkdir -p "$LibTargetDir"
+#cp -f "OpenSSLLibs/libcrypto.so.1.1" "$LibTargetDir"
+#cp -f "OpenSSLLibs/libssl.so.1.1" "$LibTargetDir"
+
+#Проверяем наличие исполнительного файла
+if [ ! -f "$TargetBinary" ]; then
+  echo "Error: \"${TargetBinary}\" not found. Can not continue."
+  exit 1
+fi
+
+#Запускаем сборщик linuxdeployqt
+./linuxdeployqt-6-x86_64.AppImage "$DesktopFileTarget" -always-overwrite -appimage -extra-plugins=imageformats/libqsvg.so -qmake="$QMakeExecutable"

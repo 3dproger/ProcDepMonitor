@@ -22,6 +22,10 @@ RC_FILE = rc.rc
 include(Utils/utils.pri)
 include(I18nManager/I18nManager.pri)
 
+unix{
+    TARGET=procdepmonitor
+}
+
 # You can also make your code fail to compile if you use deprecated APIs.
 # In order to do so, uncomment the following line.
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
