@@ -72,6 +72,8 @@ mkdir -p "$AppDir/usr/share"
 
 cp -rf "$IconsDir" "$AppDir/usr/share"
 
+cp -f "metainfo" "$AppDir/usr/share"
+
 #Удаляем старую ненужную ссылку AppRun
 if [ -L "$AppDir/AppRun" ]; then
   rm "$AppDir/AppRun"

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+​<!-- Copyright 2020 Alexander Kirsanov <collymaccy@gmail.com> -->
+​<component type="desktop-application">
+​  <id>com.kirsanovalexander1996.procdepmonitor</id>
+​  <metadata_license>MIT</metadata_license>
+​  <project_license>MIT</project_license>
+​  <name>Process Dependency Monitor</name>
+​  <summary>Retrieving information about loaded process dependencies</summary>
+​
+​  <description>
+​    <p>
+​      Cross-platform application for obtaining information about loaded process dependencies.
+      May be useful for deployment and assembly or to verify integrity standalone folders.
+​    </p>
+​  </description>
+​
+​  <launchable type="desktop-id">com.kirsanovalexander1996.procdepmonitor.desktop</launchable>
+​
+​  <screenshots>
+​    <screenshot type="default">
+​      <caption>List of dependencies of one of the processes</caption>
+​      <image>https://github.com/3dproger/ProcessDependencyMonitor/raw/master/misc/screenshot-linux-1.png</image>
+​    </screenshot>
+​  </screenshots>
+​
+​  <url type="homepage">https://github.com/3dproger/ProcessDependencyMonitor</url>
+  <url type="bugtracker">https://github.com/3dproger/ProcessDependencyMonitor/issues</url>
+  <url type="contact">mailto:collymaccy@gmail.com</url>
+  
+​  <releases>
+​    <release version="1.1.1" date="2020-01-05">
+​      <description>
+​        <p>Fixes issues X, Y and Z</p>
+​      </description>
+​    </release>
+​  </releases>
+​</component>
