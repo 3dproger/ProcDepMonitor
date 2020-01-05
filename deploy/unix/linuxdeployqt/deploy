@@ -72,7 +72,8 @@ mkdir -p "$AppDir/usr/share"
 
 cp -rf "$IconsDir" "$AppDir/usr/share"
 
-cp -f "metainfo" "$AppDir/usr/share"
+mkdir -p "$AppDir/usr/share/metainfo"
+cp -f "procdepmonitor.metainfo.xml" "$AppDir/usr/share/metainfo"
 
 #Удаляем старую ненужную ссылку AppRun
 if [ -L "$AppDir/AppRun" ]; then
