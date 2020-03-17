@@ -23,7 +23,7 @@
 # SOFTWARE.
 
 #Версия программы
-export VERSION="1.1.1"
+export VERSION="1.1.2"
 
 #Указываем архитектуру
 export ARCH="x86_64"
