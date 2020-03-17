@@ -28,7 +28,7 @@
 ; App short name
 #define   NameShort  "ProcDepMonitor"
 ; App version
-#define   Version    "1.1.1"
+#define   Version    "1.1.2"
 ; Author        
 #define   Publisher  "3dproger"
 ; Author URL
