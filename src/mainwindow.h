@@ -68,6 +68,8 @@ private slots:
 protected:
     void changeEvent(QEvent *event);
 
+    static bool showInGraphicalShell(const QString &path);
+
 private:
     Ui::MainWindow *ui;
     I18nManager _i18n;

@@ -32,7 +32,7 @@ LinuxWrapper::LinuxWrapper()
 
 }
 
-QList<OSProcessInfo> LinuxWrapper::getProcesses()
+QList<OSProcessInfo> LinuxWrapper::processes()
 {
     _processes.clear();
 
@@ -57,7 +57,7 @@ QList<OSProcessInfo> LinuxWrapper::getProcesses()
     }
 
 
-    std::sort(_processes.begin(), _processes.end(), OSWrapper::sortOSProcessInfo);
+    std::sort(_processes.begin(), _processes.end(), OSWrapper::compareOSProcessInfo);
 
     return _processes;
 }
@@ -144,7 +144,7 @@ OSProcessInfo LinuxWrapper::processByPID(int64_t pid)
         }
     }
 
-    std::sort(info.dependencies.begin(), info.dependencies.end(), sortOSProcessDependence);
+    std::sort(info.dependencies.begin(), info.dependencies.end(), compareOSProcessDependence);
 
     return info;
 }

@@ -41,7 +41,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 TRANSLATIONS += app_ru.ts
 RC_FILE = rc.rc
 
-include(Utils/utils.pri)
+#include(Utils/utils.pri)
 include(I18nManager/I18nManager.pri)
 
 unix{
@@ -79,14 +79,12 @@ win32 {
         LIBS += -lpsapi
         QMAKE_CXXFLAGS += "-DPSAPI_VERSION=1" # ToDo: check it
         HEADERS += \
-                Windows/Win32Wrapper.hpp \
-                Windows/tasklistmanager.h \
+                Windows/TaskListManager.hpp \
                 Windows/ToolHelpManager.hpp \
 
         SOURCES += \
-                Windows/Win32Wrapper.cpp \
-                Windows/tasklistmanager.cpp \
-                Windows/ToolHelpManager.cpp
+                Windows/ToolHelpManager.cpp \
+                Windows/TaskListManager.cpp \
 }
 
 FORMS += \

@@ -93,7 +93,7 @@ void I18nManager::changeLocale(const QLocale &locale)
                 availableLocations += ", ";
             }
         }
-        qWarning("Available locales: " + availableLocations.toUtf8());
+        qWarning() << "Available locales:" << availableLocations;
 
         return;
     }

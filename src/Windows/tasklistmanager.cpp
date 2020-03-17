@@ -22,9 +22,9 @@
  * SOFTWARE.
  * */
 
-#include "tasklistmanager.h"
-#include "qprocessreturner.h"
+#include "TaskListManager.hpp"
 #include <QDebug>
+#include <QProcess>
 
 QList<TaskListManager::Task> TaskListManager::getList()
 {
@@ -36,8 +36,7 @@ QList<TaskListManager::Task> TaskListManager::getList()
 
     int exitCode = -1;
 
-    QByteArray output = QProcessReturner::start("cmd", {"/C", "tasklist /NH /FO CSV"}, &exitCode);
-    //qDebug() << output;
+    QByteArray output = fromProcess("cmd", {"/C", "tasklist /NH /FO CSV"}, &exitCode);
 
     if (exitCode != 0)
     {
@@ -82,7 +81,18 @@ QList<TaskListManager::Task> TaskListManager::getList()
     return list;
 }
 
-TaskListManager::TaskListManager()
+QByteArray TaskListManager::fromProcess(const QString &program, const QStringList &arguments, int *exitCode)
 {
+    QProcess process;
 
+    process.setReadChannelMode(QProcess::MergedChannels);
+    process.start(program, arguments, QProcess::ReadOnly);
+    process.waitForFinished(-1);
+
+    if (exitCode)
+    {
+        *exitCode = process.exitCode();
+    }
+
+    return process.readAllStandardOutput();
 }

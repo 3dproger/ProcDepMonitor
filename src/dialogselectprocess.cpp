@@ -56,7 +56,7 @@ void DialogSelectProcess::updateList()
     ui->tableWidgetProcesses->clearContents();
     ui->tableWidgetProcesses->setRowCount(0);
 
-    QList<OSProcessInfo> processes = OSWrapper::instance().getProcesses();
+    QList<OSProcessInfo> processes = OSWrapper::instance().processes();
 
     qDebug() << "Found processes:" << processes.count();
 

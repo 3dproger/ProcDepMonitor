@@ -29,6 +29,10 @@
 #include "QMessageBox"
 #include "Utils/utils.h"
 #include <QClipboard>
+#include <QProcess>
+#include <QDesktopServices>
+#include <QFileInfo>
+#include <QDir>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -41,10 +45,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //Fill the menu by language actions
     ui->menuLanguage->addActions(_i18n.buildActions(ui->menuLanguage));
-
-    /*_labelStatus = new QLabel(ui->statusBar);
-    ui->statusBar->addWidget(_labelStatus);
-    _labelStatus->setText(tr("Process not selected"));*/
 
     ui->tableWidgetResult->setColumnWidth(0, 200);
     ui->tableWidgetResult->setColumnWidth(1, 450);
@@ -192,7 +192,7 @@ void MainWindow::on_btnShowInExplorer_clicked()
 
     if (item && !item->text().isEmpty())
     {
-        Utils::showInGraphicalShell(item->text());
+        showInGraphicalShell(item->text());
     }
     else
     {
@@ -262,3 +262,31 @@ void MainWindow::on_btnUpdateList_clicked()
     onPidSelected(_pid);
 }
 
+bool MainWindow::showInGraphicalShell(const QString &path)
+{
+    bool showed = false;
+    bool isFile = false;
+    QFileInfo file(path);
+    isFile = file.isFile();
+    #if defined(Q_OS_WIN)
+        //Native for Windows (Rxplorer)
+        if (isFile){
+            QStringList arguments = {"/select,", QDir::toNativeSeparators(path)};
+            showed = QProcess::startDetached("explorer.exe", arguments);
+        }
+    #elif defined(Q_OS_MACOS)
+        //ToDo: open native macOS file manager
+    #endif
+
+    if (!showed){
+        //Linux and other cases
+        if (isFile){
+            showed = QDesktopServices::openUrl(QUrl::fromLocalFile(file.path()));
+        }
+        else{
+            showed = QDesktopServices::openUrl(QUrl::fromLocalFile(path));
+        }
+    }
+
+    return showed;
+}

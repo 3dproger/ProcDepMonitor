@@ -23,7 +23,7 @@
  * */
 
 #include "ToolHelpManager.hpp"
-#include "Windows/tasklistmanager.h"
+#include "Windows/TaskListManager.hpp"
 #include <QDebug>
 #include <windows.h>
 #include <tlhelp32.h>
@@ -65,7 +65,7 @@ ToolHelpManager::ToolHelpManager()
     _rxInWindows.setCaseSensitivity(Qt::CaseSensitivity::CaseInsensitive);
 }
 
-QList<OSProcessInfo> ToolHelpManager::getProcesses()
+QList<OSProcessInfo> ToolHelpManager::processes()
 {
     _processes.clear();
 
@@ -83,7 +83,7 @@ QList<OSProcessInfo> ToolHelpManager::getProcesses()
         _processes.append(info);
     }
 
-    std::sort(_processes.begin(), _processes.end(), OSWrapper::sortOSProcessInfo);
+    std::sort(_processes.begin(), _processes.end(), OSWrapper::compareOSProcessInfo);
 
     return _processes;
 }
@@ -157,7 +157,7 @@ OSProcessInfo ToolHelpManager::_processByPID(int64_t pid)
     //  Do not forget to clean up the snapshot object.
     CloseHandle(hModuleSnap);
 
-    std::sort(info.dependencies.begin(), info.dependencies.end(), sortOSProcessDependence);
+    std::sort(info.dependencies.begin(), info.dependencies.end(), compareOSProcessDependence);
 
     return info;
 }

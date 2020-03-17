@@ -24,7 +24,6 @@
 
 #include "OSWrapper.hpp"
 #if defined (Q_OS_WIN32)
-//#include "Windows/Win32Wrapper.hpp"
 #include "Windows/ToolHelpManager.hpp"
 #elif defined(Q_OS_LINUX)
 #include "Linux/LinuxWrapper.hpp"
@@ -35,7 +34,6 @@ OSWrapper &OSWrapper::instance()
     //It is signleton
     #if defined (Q_OS_WIN32)
     static ToolHelpManager instance;
-    //static Win32Wrapper instance;
     #elif defined(Q_OS_LINUX)
     static LinuxWrapper instance;
     #else
@@ -46,7 +44,7 @@ OSWrapper &OSWrapper::instance()
     return instance;
 }
 
-QList<OSProcessInfo> OSWrapper::getProcesses()
+QList<OSProcessInfo> OSWrapper::processes()
 {
     return QList<OSProcessInfo>();
 }
@@ -57,7 +55,7 @@ OSProcessInfo OSWrapper::processByPID(int64_t)
     return OSProcessInfo();
 }
 
-bool OSWrapper::sortOSProcessInfo(const OSProcessInfo &info1, const OSProcessInfo &info2)
+bool OSWrapper::compareOSProcessInfo(const OSProcessInfo &info1, const OSProcessInfo &info2)
 {
     //By canGetDependencies
     if (info1.canGetDependencies && !info2.canGetDependencies)
@@ -98,7 +96,7 @@ bool OSWrapper::sortOSProcessInfo(const OSProcessInfo &info1, const OSProcessInf
     #endif
 }
 
-bool OSWrapper::sortOSProcessDependence(const OSProcessDependence &dep1, const OSProcessDependence &dep2)
+bool OSWrapper::compareOSProcessDependence(const OSProcessDependence &dep1, const OSProcessDependence &dep2)
 {
     if (dep1.specialDir != dep2.specialDir)
     {
