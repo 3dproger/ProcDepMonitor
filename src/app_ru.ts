@@ -47,27 +47,27 @@
         <translation>Выбрать</translation>
     </message>
     <message>
-        <location filename="dialogselectprocess.cpp" line="54"/>
+        <location filename="dialogselectprocess.cpp" line="78"/>
         <source>No access</source>
         <translation>Нет доступа</translation>
     </message>
     <message>
-        <location filename="dialogselectprocess.cpp" line="96"/>
+        <location filename="dialogselectprocess.cpp" line="120"/>
         <source>Notification</source>
         <translation>Уведомление</translation>
     </message>
     <message>
-        <location filename="dialogselectprocess.cpp" line="96"/>
+        <location filename="dialogselectprocess.cpp" line="120"/>
         <source>Process not selected</source>
         <translation>Процесс не выбран</translation>
     </message>
     <message>
-        <location filename="dialogselectprocess.cpp" line="105"/>
+        <location filename="dialogselectprocess.cpp" line="129"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location filename="dialogselectprocess.cpp" line="105"/>
+        <location filename="dialogselectprocess.cpp" line="129"/>
         <source>Internal error</source>
         <translation>Внутренняя ошибка</translation>
     </message>
@@ -87,7 +87,7 @@
     <name>MainWindow</name>
     <message>
         <location filename="mainwindow.ui" line="23"/>
-        <location filename="mainwindow.cpp" line="34"/>
+        <location filename="mainwindow.cpp" line="57"/>
         <source>Show in Explorer</source>
         <translation>Показать в Проводнике</translation>
     </message>
@@ -132,7 +132,7 @@
     </message>
     <message>
         <location filename="mainwindow.ui" line="152"/>
-        <location filename="mainwindow.cpp" line="69"/>
+        <location filename="mainwindow.cpp" line="92"/>
         <source>About Software</source>
         <translation>О программе</translation>
     </message>
@@ -147,12 +147,12 @@
         <translation>Выйти</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="40"/>
+        <location filename="mainwindow.cpp" line="63"/>
         <source>Copy Path</source>
         <translation>Копировать путь</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="44"/>
+        <location filename="mainwindow.cpp" line="67"/>
         <source>Copy Name</source>
         <translation>Копировать имя</translation>
     </message>
@@ -161,23 +161,23 @@
         <translation type="vanished">Организация: %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="64"/>
+        <location filename="mainwindow.cpp" line="87"/>
         <source>Author: %1</source>
         <translation>Автор: %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="66"/>
+        <location filename="mainwindow.cpp" line="89"/>
         <source>Qt: %1 %2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="67"/>
+        <location filename="mainwindow.cpp" line="90"/>
         <source>Build Date and Time: %1 %2</source>
         <translation>Дата и время сборки: %1 %2</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="143"/>
-        <location filename="mainwindow.cpp" line="144"/>
+        <location filename="mainwindow.cpp" line="168"/>
+        <location filename="mainwindow.cpp" line="169"/>
         <source>&lt;unknown&gt;</source>
         <translation>&lt;неизвестно&gt;</translation>
     </message>
@@ -186,16 +186,22 @@
         <translation type="vanished">Внутренняя ошибка</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="173"/>
-        <location filename="mainwindow.cpp" line="213"/>
-        <location filename="mainwindow.cpp" line="230"/>
+        <location filename="mainwindow.cpp" line="196"/>
+        <location filename="mainwindow.cpp" line="201"/>
+        <location filename="mainwindow.cpp" line="241"/>
+        <location filename="mainwindow.cpp" line="258"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="173"/>
-        <location filename="mainwindow.cpp" line="213"/>
-        <location filename="mainwindow.cpp" line="230"/>
+        <location filename="mainwindow.cpp" line="196"/>
+        <source>Failed to open path &quot;%1&quot;</source>
+        <translation>Не удалось открыть путь &quot;%1&quot;</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="201"/>
+        <location filename="mainwindow.cpp" line="241"/>
+        <location filename="mainwindow.cpp" line="258"/>
         <source>Internal error</source>
         <translation>Внутренняя ошибка</translation>
     </message>

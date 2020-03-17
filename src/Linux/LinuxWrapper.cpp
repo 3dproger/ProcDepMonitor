@@ -25,7 +25,6 @@
 #include "LinuxWrapper.hpp"
 #include <QDebug>
 #include <QDir>
-#include "Utils/utils.h"
 
 LinuxWrapper::LinuxWrapper()
 {
@@ -100,7 +99,7 @@ OSProcessInfo LinuxWrapper::processByPID(int64_t pid)
             {
                 const QByteArray& line = fileStatus.readLine();
 
-                if (Utils::containsLeft(line, "Name:", false))
+                if (line.left(5).toLower() == "name:")
                 {
                     info.name = "[" + line.mid(5).trimmed() + "]";
                     info.valid = true;
@@ -131,9 +130,21 @@ OSProcessInfo LinuxWrapper::processByPID(int64_t pid)
         {
             OSProcessDependence dep;
 
-            dep.fileName = fileInfo.canonicalFilePath();
+            dep.fileName = fileInfo.symLinkTarget();
+            dep.name = fileInfo.symLinkTarget();
 
-            dep.name = Utils::getFileNameFromPath(dep.fileName);
+            if (fileInfo.symLinkTarget() != fileInfo.canonicalFilePath() && fileInfo.symLinkTarget().contains("(deleted)", Qt::CaseSensitivity::CaseInsensitive))
+            {
+                //symLinkTarget maked as "(deleted)" by OS
+                dep.specialDir = SpecialDirs::LinuxSymLinkDeleted;
+            }
+            else
+            {
+                if (dep.name.contains('/'))
+                {
+                    dep.name = dep.name.mid(dep.name.lastIndexOf('/') + 1);
+                }
+            }
 
             if (!dep.fileName.isEmpty())
             {

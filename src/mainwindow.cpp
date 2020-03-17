@@ -27,7 +27,6 @@
 #include <QMessageBox>
 #include <QDebug>
 #include "QMessageBox"
-#include "Utils/utils.h"
 #include <QClipboard>
 #include <QProcess>
 #include <QDesktopServices>
@@ -160,6 +159,9 @@ void MainWindow::onPidSelected(int64_t pid)
         case SpecialDirs::Windows:
             textColor = QColor(128, 64, 128);
             break;
+        case SpecialDirs::LinuxSymLinkDeleted:
+            textColor = QColor(255, 0, 255);
+            break;
         case SpecialDirs::None:
             break;
         }
@@ -192,7 +194,10 @@ void MainWindow::on_btnShowInExplorer_clicked()
 
     if (item && !item->text().isEmpty())
     {
-        showInGraphicalShell(item->text());
+        if (!showInGraphicalShell(item->text()))
+        {
+            QMessageBox::critical(this, tr("Error"), tr("Failed to open path \"%1\"").arg(item->text()));
+        }
     }
     else
     {
@@ -268,6 +273,7 @@ bool MainWindow::showInGraphicalShell(const QString &path)
     bool isFile = false;
     QFileInfo file(path);
     isFile = file.isFile();
+
     #if defined(Q_OS_WIN)
         //Native for Windows (Rxplorer)
         if (isFile){
