@@ -54,7 +54,14 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QAction* action;
 
-    action = new QAction(tr("Show in Explorer"), _itemContextMenu);
+    QString showInGraphicalShellString;
+#if defined(Q_OS_WIN)
+    showInGraphicalShellString = tr("Show in Explorer");
+#else
+    showInGraphicalShellString = tr("Show in file manager");
+#endif
+    action = new QAction(showInGraphicalShellString, _itemContextMenu);
+
     connect(action, &QAction::triggered, this, &MainWindow::on_btnShowInExplorer_clicked);
     _itemContextMenu->addAction(action);
 

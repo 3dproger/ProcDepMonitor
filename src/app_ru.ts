@@ -87,7 +87,7 @@
     <name>MainWindow</name>
     <message>
         <location filename="mainwindow.ui" line="23"/>
-        <location filename="mainwindow.cpp" line="57"/>
+        <location filename="mainwindow.cpp" line="59"/>
         <source>Show in Explorer</source>
         <translation>Показать в Проводнике</translation>
     </message>
@@ -132,7 +132,7 @@
     </message>
     <message>
         <location filename="mainwindow.ui" line="152"/>
-        <location filename="mainwindow.cpp" line="92"/>
+        <location filename="mainwindow.cpp" line="99"/>
         <source>About Software</source>
         <translation>О программе</translation>
     </message>
@@ -147,12 +147,12 @@
         <translation>Выйти</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="63"/>
+        <location filename="mainwindow.cpp" line="70"/>
         <source>Copy Path</source>
         <translation>Копировать путь</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="67"/>
+        <location filename="mainwindow.cpp" line="74"/>
         <source>Copy Name</source>
         <translation>Копировать имя</translation>
     </message>
@@ -161,23 +161,28 @@
         <translation type="vanished">Организация: %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="87"/>
+        <location filename="mainwindow.cpp" line="61"/>
+        <source>Show in file manager</source>
+        <translation>Показать в файловом менеджере</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="94"/>
         <source>Author: %1</source>
         <translation>Автор: %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="89"/>
+        <location filename="mainwindow.cpp" line="96"/>
         <source>Qt: %1 %2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="90"/>
+        <location filename="mainwindow.cpp" line="97"/>
         <source>Build Date and Time: %1 %2</source>
         <translation>Дата и время сборки: %1 %2</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="168"/>
-        <location filename="mainwindow.cpp" line="169"/>
+        <location filename="mainwindow.cpp" line="178"/>
+        <location filename="mainwindow.cpp" line="179"/>
         <source>&lt;unknown&gt;</source>
         <translation>&lt;неизвестно&gt;</translation>
     </message>
@@ -186,22 +191,22 @@
         <translation type="vanished">Внутренняя ошибка</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="196"/>
-        <location filename="mainwindow.cpp" line="201"/>
-        <location filename="mainwindow.cpp" line="241"/>
-        <location filename="mainwindow.cpp" line="258"/>
+        <location filename="mainwindow.cpp" line="206"/>
+        <location filename="mainwindow.cpp" line="211"/>
+        <location filename="mainwindow.cpp" line="251"/>
+        <location filename="mainwindow.cpp" line="268"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="196"/>
+        <location filename="mainwindow.cpp" line="206"/>
         <source>Failed to open path &quot;%1&quot;</source>
         <translation>Не удалось открыть путь &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="201"/>
-        <location filename="mainwindow.cpp" line="241"/>
-        <location filename="mainwindow.cpp" line="258"/>
+        <location filename="mainwindow.cpp" line="211"/>
+        <location filename="mainwindow.cpp" line="251"/>
+        <location filename="mainwindow.cpp" line="268"/>
         <source>Internal error</source>
         <translation>Внутренняя ошибка</translation>
     </message>
