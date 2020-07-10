@@ -32,6 +32,7 @@
 #include <QDesktopServices>
 #include <QFileInfo>
 #include <QDir>
+#include <QUrl>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
