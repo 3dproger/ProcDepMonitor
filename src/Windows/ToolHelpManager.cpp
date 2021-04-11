@@ -88,7 +88,7 @@ QList<OSProcessInfo> ToolHelpManager::processes()
     return _processes;
 }
 
-OSProcessInfo ToolHelpManager::processByPID(int64_t pid)
+OSProcessInfo ToolHelpManager::processByPIDImpl(int64_t pid)
 {
     OSProcessInfo info = _processByPID(pid);
 
@@ -147,17 +147,20 @@ OSProcessInfo ToolHelpManager::_processByPID(int64_t pid)
         dep.valid = true;
         dep.name = QString::fromWCharArray(me32.szModule);
         dep.fileName = QString::fromWCharArray(me32.szExePath);
+
+        if (dep.fileName.startsWith("\\\\?\\"))
+        {
+            dep.fileName = dep.fileName.mid(4);
+        }
+
         dep.specialDir = getSpecialDir(dep.fileName);
 
         info.dependencies.append(dep);
-
     }
     while(Module32Next(hModuleSnap, &me32));
 
     //  Do not forget to clean up the snapshot object.
     CloseHandle(hModuleSnap);
-
-    std::sort(info.dependencies.begin(), info.dependencies.end(), compareOSProcessDependence);
 
     return info;
 }

@@ -28,6 +28,57 @@
 #elif defined(Q_OS_LINUX)
 #include "Linux/LinuxWrapper.hpp"
 #endif
+#include <QDebug>
+
+namespace
+{
+
+static const QSet<QString> Win32ExecutableExtentions = {
+    "exe",
+    "msi",
+    "bat",
+};
+
+void removeDuplicates(OSProcessInfo& info)
+{
+    for (int i = 0; i < info.dependencies.count();)
+    {
+        const OSProcessDependence dep = info.dependencies[i];
+
+        bool removed = false;
+        for (int j = i + 1; j < info.dependencies.count(); j++)
+        {
+            const OSProcessDependence dep2 = info.dependencies[j];
+            if (dep == dep2)
+            {
+                info.dependencies.removeAt(j);
+                removed = true;
+                qDebug() << "Removed duplicate" << dep2.fileName;
+                break;
+            }
+        }
+
+        if (!removed)
+        {
+            i++;
+        }
+    }
+}
+
+QString extractExtension(const QString& path_)
+{
+    QString path = path_;
+    path = path.mid(path.lastIndexOf('/') + 1);
+    path = path.mid(path.lastIndexOf('\\') + 1);
+    if (path.contains('.'))
+    {
+        return path.mid(path.lastIndexOf('.') + 1).toLower();
+    }
+
+    return QString();
+}
+
+}
 
 OSWrapper &OSWrapper::instance()
 {
@@ -49,10 +100,22 @@ QList<OSProcessInfo> OSWrapper::processes()
     return QList<OSProcessInfo>();
 }
 
-OSProcessInfo OSWrapper::processByPID(int64_t)
+OSProcessInfo OSWrapper::processByPID(int64_t pid)
 {
-    qDebug("the function processByPID(int64_t pid) must be overridden in the heir classes!");
-    return OSProcessInfo();
+    OSProcessInfo info = processByPIDImpl(pid);
+    removeDuplicates(info);
+
+    for (OSProcessDependence& dep : info.dependencies)
+    {
+        dep.extention = extractExtension(dep.fileName);
+#if defined (Q_OS_WIN32)
+        dep.executable = Win32ExecutableExtentions.contains(dep.extention);
+#endif
+    }
+
+    std::sort(info.dependencies.begin(), info.dependencies.end(), compareOSProcessDependence);
+
+    return info;
 }
 
 bool OSWrapper::compareOSProcessInfo(const OSProcessInfo &info1, const OSProcessInfo &info2)
@@ -86,8 +149,6 @@ bool OSWrapper::compareOSProcessInfo(const OSProcessInfo &info1, const OSProcess
         return info1.id < info2.id;
     }
 
-
-
     //By name
     #ifdef Q_OS_WIN32
         return info1.name.toLower() < info2.name.toLower();
@@ -98,12 +159,22 @@ bool OSWrapper::compareOSProcessInfo(const OSProcessInfo &info1, const OSProcess
 
 bool OSWrapper::compareOSProcessDependence(const OSProcessDependence &dep1, const OSProcessDependence &dep2)
 {
+    if (dep1.executable != dep2.executable)
+    {
+        return dep1.executable;
+    }
+
     if (dep1.specialDir != dep2.specialDir)
     {
         return dep1.specialDir < dep2.specialDir;
     }
 
     #ifdef Q_OS_WIN32
+    if (dep1.extention != dep2.extention)
+    {
+        return dep1.extention > dep2.extention;
+    }
+
     if (dep1.fileName.toLower() != dep2.fileName.toLower())
     {
         return dep1.fileName.toLower() < dep2.fileName.toLower();
