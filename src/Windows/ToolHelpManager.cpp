@@ -88,7 +88,7 @@ QList<OSProcessInfo> ToolHelpManager::processes()
     return _processes;
 }
 
-OSProcessInfo ToolHelpManager::processByPID(int64_t pid)
+OSProcessInfo ToolHelpManager::processByPIDImpl(int64_t pid)
 {
     OSProcessInfo info = _processByPID(pid);
 

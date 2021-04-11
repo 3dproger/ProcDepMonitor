@@ -133,7 +133,7 @@ void MainWindow::onPidSelected(int64_t pid)
     ui->tableWidgetResult->clearContents();
     ui->tableWidgetResult->setRowCount(0);
 
-    OSProcessInfo info = OSWrapper::instance().processByPID(pid);
+    const OSProcessInfo info = OSWrapper::instance().processByPID(pid);
 
     qDebug() << "Process ID:" << info.id << ", Process Name:" << info.name;
 

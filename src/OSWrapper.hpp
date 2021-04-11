@@ -44,6 +44,14 @@ struct OSProcessDependence
     QString fileName;
     bool valid = false;
     SpecialDirs specialDir = SpecialDirs::None;
+
+    bool operator==(const OSProcessDependence& other) const
+    {
+        return name == other.name &&
+                fileName == other.fileName &&
+                valid == other.valid &&
+                specialDir == other.specialDir;
+    }
 };
 
 struct OSProcessInfo
@@ -64,7 +72,7 @@ public:
 
     virtual QList<OSProcessInfo> processes();
 
-    virtual OSProcessInfo processByPID(int64_t pid);
+    OSProcessInfo processByPID(int64_t pid);
 
     virtual ~OSWrapper() {} // In order to hide the warning
 
@@ -74,6 +82,8 @@ public:
 
 protected:
     OSWrapper() {}
+
+    virtual OSProcessInfo processByPIDImpl(int64_t pid) = 0;
 
 private:
     OSWrapper(const OSWrapper& root) = delete;

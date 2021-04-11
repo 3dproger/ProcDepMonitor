@@ -28,6 +28,7 @@
 #elif defined(Q_OS_LINUX)
 #include "Linux/LinuxWrapper.hpp"
 #endif
+#include <QDebug>
 
 OSWrapper &OSWrapper::instance()
 {
@@ -49,10 +50,35 @@ QList<OSProcessInfo> OSWrapper::processes()
     return QList<OSProcessInfo>();
 }
 
-OSProcessInfo OSWrapper::processByPID(int64_t)
+OSProcessInfo OSWrapper::processByPID(int64_t pid)
 {
-    qDebug("the function processByPID(int64_t pid) must be overridden in the heir classes!");
-    return OSProcessInfo();
+    OSProcessInfo info = processByPIDImpl(pid);
+
+    for (int i = 0; i < info.dependencies.count();)
+    {
+        const OSProcessDependence dep = info.dependencies[i];
+
+        bool removed = false;
+        for (int j = i + 1; j < info.dependencies.count(); j++)
+        {
+            const OSProcessDependence dep2 = info.dependencies[j];
+            if (dep == dep2)
+            {
+                info.dependencies.removeAt(j);
+                removed = true;
+                qDebug() << "remove duplicate" << dep2.fileName;
+                break;
+            }
+        }
+
+        if (!removed)
+        {
+            i++;
+        }
+    }
+
+
+    return info;
 }
 
 bool OSWrapper::compareOSProcessInfo(const OSProcessInfo &info1, const OSProcessInfo &info2)

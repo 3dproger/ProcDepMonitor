@@ -32,9 +32,11 @@ class ToolHelpManager : public OSWrapper
 public:
     ToolHelpManager();
     QList<OSProcessInfo> processes() override;
-    OSProcessInfo processByPID(int64_t pid) override;
 
     bool getIsAdministrator() const;
+
+protected:
+    OSProcessInfo processByPIDImpl(int64_t pid) override;
 
 private:
     OSProcessInfo _processByPID(int64_t pid);
