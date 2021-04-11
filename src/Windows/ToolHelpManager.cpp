@@ -147,6 +147,12 @@ OSProcessInfo ToolHelpManager::_processByPID(int64_t pid)
         dep.valid = true;
         dep.name = QString::fromWCharArray(me32.szModule);
         dep.fileName = QString::fromWCharArray(me32.szExePath);
+
+        if (dep.fileName.startsWith("\\\\?\\"))
+        {
+            dep.fileName = dep.fileName.mid(4);
+        }
+
         dep.specialDir = getSpecialDir(dep.fileName);
 
         info.dependencies.append(dep);
