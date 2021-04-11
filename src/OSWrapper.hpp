@@ -42,7 +42,9 @@ struct OSProcessDependence
 {
     QString name;
     QString fileName;
+    QString extention;
     bool valid = false;
+    bool executable = false;
     SpecialDirs specialDir = SpecialDirs::None;
 
     bool operator==(const OSProcessDependence& other) const
@@ -50,7 +52,8 @@ struct OSProcessDependence
         return name == other.name &&
                 fileName == other.fileName &&
                 valid == other.valid &&
-                specialDir == other.specialDir;
+                specialDir == other.specialDir &&
+                executable == other.executable;
     }
 };
 

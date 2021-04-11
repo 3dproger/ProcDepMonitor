@@ -155,8 +155,6 @@ OSProcessInfo LinuxWrapper::processByPIDImpl(int64_t pid)
         }
     }
 
-    std::sort(info.dependencies.begin(), info.dependencies.end(), compareOSProcessDependence);
-
     return info;
 }
 

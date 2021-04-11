@@ -150,14 +150,11 @@ OSProcessInfo ToolHelpManager::_processByPID(int64_t pid)
         dep.specialDir = getSpecialDir(dep.fileName);
 
         info.dependencies.append(dep);
-
     }
     while(Module32Next(hModuleSnap, &me32));
 
     //  Do not forget to clean up the snapshot object.
     CloseHandle(hModuleSnap);
-
-    std::sort(info.dependencies.begin(), info.dependencies.end(), compareOSProcessDependence);
 
     return info;
 }

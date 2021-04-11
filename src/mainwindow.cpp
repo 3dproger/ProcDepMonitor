@@ -137,8 +137,6 @@ void MainWindow::onPidSelected(int64_t pid)
 
     qDebug() << "Process ID:" << info.id << ", Process Name:" << info.name;
 
-
-
     setWindowTitle(
                 QString("%1 - [%2 (%3)]")
                 .arg(QApplication::applicationName())
@@ -184,6 +182,12 @@ void MainWindow::onPidSelected(int64_t pid)
         {
             itemName->setTextColor(textColor);
             itemPath->setTextColor(textColor);
+        }
+
+        if (dep.executable)
+        {
+            itemName->setBackgroundColor(QColor(255, 224, 178));
+            itemPath->setBackgroundColor(QColor(255, 224, 178));
         }
 
         ui->tableWidgetResult->setItem(row, 0, itemName);
