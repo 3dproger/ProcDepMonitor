@@ -61,7 +61,7 @@ QList<OSProcessInfo> LinuxWrapper::processes()
     return _processes;
 }
 
-OSProcessInfo LinuxWrapper::processByPID(int64_t pid)
+OSProcessInfo LinuxWrapper::processByPIDImpl(int64_t pid)
 {
     OSProcessInfo info;
 
@@ -154,8 +154,6 @@ OSProcessInfo LinuxWrapper::processByPID(int64_t pid)
             addDep(info.dependencies, dep);
         }
     }
-
-    std::sort(info.dependencies.begin(), info.dependencies.end(), compareOSProcessDependence);
 
     return info;
 }
