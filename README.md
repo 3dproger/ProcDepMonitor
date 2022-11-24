@@ -1,7 +1,5 @@
 # Process Dependency Monitor
-Comfortable cross-platform process dependency monitor with GUI based on Qt. Useful for the process of deploying your applications and controlling process dependencies, or or determine which libraries a particular application uses
-
-During development a template was used: [TemplateQtWidgets](https://github.com/3dproger/TemplateQtWidgets)
+Comfortable cross-platform process dependency monitor with GUI based on Qt. Useful for the process of deploying your applications and controlling process dependencies, or determine which libraries a particular application uses
 
 <p align="center">
   <br>
