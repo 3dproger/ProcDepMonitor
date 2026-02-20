@@ -67,12 +67,20 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp
 
-unix {
+unix:!macx {
 HEADERS += \
         Linux/LinuxWrapper.hpp
 
 SOURCES += \
         Linux/LinuxWrapper.cpp
+}
+
+macx {
+HEADERS += \
+        Macos/MacosWrapper.h
+
+SOURCES += \
+        Macos/MacosWrapper.cpp
 }
 
 win32 {
@@ -136,7 +144,7 @@ CONFIG(debug, debug|release) {
     }
     macx {
         message("Building for macx")
-        DESTDIR = $$_PRO_FILE_PWD_/deploy/macx#Папка, куда кладётся конечный билд
+        DESTDIR = $$_PRO_FILE_PWD_/../deploy/macx
         #ToDo: реализовать вызов macdeployqt
     }
 }

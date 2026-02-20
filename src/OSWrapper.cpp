@@ -27,6 +27,8 @@
 #include "Windows/ToolHelpManager.hpp"
 #elif defined(Q_OS_LINUX)
 #include "Linux/LinuxWrapper.hpp"
+#elif defined(Q_OS_MAC)
+#include "Macos/MacosWrapper.h"
 #endif
 #include <QDebug>
 
@@ -87,6 +89,8 @@ OSWrapper &OSWrapper::instance()
     static ToolHelpManager instance;
     #elif defined(Q_OS_LINUX)
     static LinuxWrapper instance;
+    #elif defined(Q_OS_MAC)
+    static MacosWrapper instance;
     #else
     qFatal("This OS is not yet supported");
     static OSWrapper instance;

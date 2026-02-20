@@ -1,7 +1,7 @@
 /*
  * MIT License
 
- * Copyright (c) 2020 Alexander Kirsanov
+ * Copyright (c) 2020-2026 Alexander Kirsanov
 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,14 +26,16 @@
 
 #include "OSWrapper.hpp"
 
-class LinuxWrapper : public OSWrapper
+class MacosWrapper : public OSWrapper
 {
 public:
-    LinuxWrapper();
+    MacosWrapper();
     QList<OSProcessInfo> processes() override;
     OSProcessInfo processByPIDImpl(int64_t pid) override;
+    static QList<int64_t> processesPids();
+    static QString getProcessName(pid_t pid);
+    static QString getProcessPath(const pid_t pid);
 
 private:
     QList<OSProcessInfo> _processes;
-    void addDep(QList<OSProcessDependence>& list, const OSProcessDependence& dep);
 };
