@@ -57,12 +57,14 @@ CONFIG += c++11
 
 HEADERS += \
         OSWrapper.hpp \
+        VMMapParser.h \
         dialogselectprocess.h \
         mainwindow.h
 
 
 SOURCES += \
         OSWrapper.cpp \
+        VMMapParser.cpp \
         dialogselectprocess.cpp \
         main.cpp \
         mainwindow.cpp

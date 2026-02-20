@@ -55,7 +55,7 @@ void removeDuplicates(OSProcessInfo& info)
             {
                 info.dependencies.removeAt(j);
                 removed = true;
-                qDebug() << "Removed duplicate" << dep2.fileName;
+                //qDebug() << "Removed duplicate" << dep2.fileName;
                 break;
             }
         }

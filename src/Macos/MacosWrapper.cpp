@@ -1,10 +1,13 @@
 #include "MacosWrapper.h"
+#include "../VMMapParser.h"
 #include <sys/sysctl.h>
 #include <mach/mach.h>
 #include <sys/proc_info.h>
 #include <libproc.h>
 #include <mach-o/dyld.h>
+#include <mach-o/dyld_images.h>
 #include <QDebug>
+#include <QFileInfo>
 
 MacosWrapper::MacosWrapper() {}
 
@@ -31,6 +34,11 @@ OSProcessInfo MacosWrapper::processByPIDImpl(int64_t pid)
 
     info.id = pid;
     info.name = getProcessPath(pid);
+    info.fileName = info.name;
+    info.dependencies = getDeps(pid, info.canGetDependencies);
+    info.valid = true;
+
+    qDebug() << info.id << info.name << ", found:" << info.dependencies.count();
 
     return info;
 }
@@ -107,4 +115,31 @@ QString MacosWrapper::getProcessPath(const pid_t pid)
     }
 
     return pathbuf;
+}
+
+QList<OSProcessDependence> MacosWrapper::getDeps(const pid_t pid, bool& hasAccess)
+{
+    QList<OSProcessDependence> result;
+
+    const auto data = VMMapParser::parseForPid(pid);
+    hasAccess = data.hasAccess;
+
+    const auto& regions = data.regions;
+    for (const auto& region : regions)
+    {
+        if (region.startsWith('/'))
+        {
+            QFileInfo info(region);
+
+            OSProcessDependence dep;
+            dep.name = info.fileName();
+            dep.fileName = region;
+            dep.extention = info.suffix();
+            dep.valid = true;
+
+            result.append(dep);
+        }
+    }
+
+    return result;
 }

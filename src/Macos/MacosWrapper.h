@@ -35,6 +35,7 @@ public:
     static QList<int64_t> processesPids();
     static QString getProcessName(pid_t pid);
     static QString getProcessPath(const pid_t pid);
+    static QList<OSProcessDependence> getDeps(const pid_t pid, bool& hasAccess);
 
 private:
     QList<OSProcessInfo> _processes;
