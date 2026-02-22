@@ -8,34 +8,38 @@
 #include <mach-o/dyld_images.h>
 #include <QDebug>
 #include <QFileInfo>
+#include <QProcess>
 
 MacosWrapper::MacosWrapper() {}
 
-QList<OSProcessInfo> MacosWrapper::processes()
+QList<OSProcessInfo> MacosWrapper::getProcesses(const bool includeDeps) const
 {
-    const auto pids = processesPids();
+    QList<OSProcessInfo> result;
 
-    _processes.clear();
-    _processes.reserve(pids.size());
+    const auto pids = processesPids();
+    result.reserve(pids.count());
 
     for (const auto& pid : pids)
     {
-        _processes.append(processByPID(pid));
+        result.append(getProcessByPid(pid, includeDeps));
     }
 
-    std::sort(_processes.begin(), _processes.end(), OSWrapper::compareOSProcessInfo);
+    std::sort(result.begin(), result.end(), OSWrapper::compareOSProcessInfo);
 
-    return _processes;
+    return result;
 }
 
-OSProcessInfo MacosWrapper::processByPIDImpl(int64_t pid)
+OSProcessInfo MacosWrapper::processByPidImpl(int64_t pid, const bool includeDeps) const
 {
     OSProcessInfo info;
 
     info.id = pid;
     info.name = getProcessPath(pid);
     info.fileName = info.name;
-    info.dependencies = getDeps(pid, info.canGetDependencies);
+    if (includeDeps)
+    {
+        info.dependencies = getDeps(pid, info.canGetDependencies);
+    }
     info.valid = true;
 
     qDebug() << info.id << info.name << ", found:" << info.dependencies.count();
@@ -142,4 +146,39 @@ QList<OSProcessDependence> MacosWrapper::getDeps(const pid_t pid, bool& hasAcces
     }
 
     return result;
+}
+
+bool MacosWrapper::revealInFinder(const QString &rawPath)
+{
+    QFileInfo fileInfo(rawPath);
+
+    auto path = fileInfo.canonicalFilePath();
+    if (path.isEmpty())
+    {
+        qCritical() << "Failed to get canonical file path";
+        path = rawPath;
+    }
+
+    QStringList scriptArgs;
+    scriptArgs << QLatin1String("-e")
+               << QString::fromLatin1("tell application \"Finder\" to reveal POSIX file \"%1\"")
+                      .arg(path);
+
+    if (QProcess::execute(QLatin1String("/usr/bin/osascript"), scriptArgs) != 0)
+    {
+        qCritical() << "Failed to execute script to reveal";
+        return false;
+    }
+
+
+    scriptArgs.clear();
+    scriptArgs << QLatin1String("-e")
+               << QLatin1String("tell application \"Finder\" to activate");
+    if (QProcess::execute(QLatin1String("/usr/bin/osascript"), scriptArgs) != 0)
+    {
+        qCritical() << "Failed to execute script to activate";
+        return false;
+    }
+
+    return true;
 }

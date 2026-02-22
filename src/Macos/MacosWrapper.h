@@ -30,13 +30,11 @@ class MacosWrapper : public OSWrapper
 {
 public:
     MacosWrapper();
-    QList<OSProcessInfo> processes() override;
-    OSProcessInfo processByPIDImpl(int64_t pid) override;
+    QList<OSProcessInfo> getProcesses(const bool includeDeps) const override;
+    OSProcessInfo processByPidImpl(const int64_t pid, const bool includeDeps) const override;
     static QList<int64_t> processesPids();
     static QString getProcessName(pid_t pid);
     static QString getProcessPath(const pid_t pid);
     static QList<OSProcessDependence> getDeps(const pid_t pid, bool& hasAccess);
-
-private:
-    QList<OSProcessInfo> _processes;
+    static bool revealInFinder(const QString& path);
 };

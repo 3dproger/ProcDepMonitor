@@ -72,21 +72,16 @@ class OSWrapper
 {
 public:
     static OSWrapper& instance();
-
-    virtual QList<OSProcessInfo> processes();
-
-    OSProcessInfo processByPID(int64_t pid);
-
-    virtual ~OSWrapper() {} // In order to hide the warning
-
+    virtual QList<OSProcessInfo> getProcesses(const bool includeDeps) const = 0;
+    OSProcessInfo getProcessByPid(const int64_t pid, const bool includeDeps) const;
     static bool compareOSProcessInfo(const OSProcessInfo& info1, const OSProcessInfo& info2);
-
     static bool compareOSProcessDependence(const OSProcessDependence& dep1, const OSProcessDependence& dep2);
 
 protected:
     OSWrapper() {}
+    virtual ~OSWrapper(){}
 
-    virtual OSProcessInfo processByPIDImpl(int64_t pid) = 0;
+    virtual OSProcessInfo processByPidImpl(const int64_t pid, const bool includeDeps) const = 0;
 
 private:
     OSWrapper(const OSWrapper& root) = delete;

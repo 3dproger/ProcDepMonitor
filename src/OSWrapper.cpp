@@ -99,14 +99,9 @@ OSWrapper &OSWrapper::instance()
     return instance;
 }
 
-QList<OSProcessInfo> OSWrapper::processes()
+OSProcessInfo OSWrapper::getProcessByPid(const int64_t pid, const bool includeDeps) const
 {
-    return QList<OSProcessInfo>();
-}
-
-OSProcessInfo OSWrapper::processByPID(int64_t pid)
-{
-    OSProcessInfo info = processByPIDImpl(pid);
+    OSProcessInfo info = processByPidImpl(pid, includeDeps);
     removeDuplicates(info);
 
     for (OSProcessDependence& dep : info.dependencies)

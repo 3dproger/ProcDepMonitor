@@ -31,7 +31,7 @@ LinuxWrapper::LinuxWrapper()
 
 }
 
-QList<OSProcessInfo> LinuxWrapper::processes()
+QList<OSProcessInfo> LinuxWrapper::getProcesses()
 {
     _processes.clear();
 
@@ -51,7 +51,7 @@ QList<OSProcessInfo> LinuxWrapper::processes()
         pid = fileNamePid.toLongLong(&ok);
         if (ok)
         {
-            _processes.append(processByPID(pid));
+            _processes.append(getProcessByPid(pid));
         }
     }
 

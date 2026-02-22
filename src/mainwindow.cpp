@@ -34,6 +34,10 @@
 #include <QDir>
 #include <QUrl>
 
+#ifdef Q_OS_MAC
+#include "Macos/MacosWrapper.h"
+#endif
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -133,7 +137,7 @@ void MainWindow::onPidSelected(int64_t pid)
     ui->tableWidgetResult->clearContents();
     ui->tableWidgetResult->setRowCount(0);
 
-    const OSProcessInfo info = OSWrapper::instance().processByPID(pid);
+    const OSProcessInfo info = OSWrapper::instance().getProcessByPid(pid, true);
 
     qDebug() << "Process ID:" << info.id << ", Process Name:" << info.name;
 
@@ -281,30 +285,48 @@ void MainWindow::on_btnUpdateList_clicked()
 
 bool MainWindow::showInGraphicalShell(const QString &path)
 {
-    bool showed = false;
-    bool isFile = false;
-    QFileInfo file(path);
-    isFile = file.isFile();
+    QFileInfo fileInfo(path);
 
-    #if defined(Q_OS_WIN)
-        //Native for Windows (Rxplorer)
-        if (isFile){
-            QStringList arguments = {"/select,", QDir::toNativeSeparators(path)};
-            showed = QProcess::startDetached("explorer.exe", arguments);
+#if defined(Q_OS_WIN)
+    if (fileInfo.isFile())
+    {
+        QStringList arguments = {"/select,", QDir::toNativeSeparators(path)};
+        if (QProcess::startDetached("explorer.exe", arguments))
+        {
+            return true;
         }
-    #elif defined(Q_OS_MACOS)
-        //ToDo: open native macOS file manager
-    #endif
-
-    if (!showed){
-        //Linux and other cases
-        if (isFile){
-            showed = QDesktopServices::openUrl(QUrl::fromLocalFile(file.path()));
-        }
-        else{
-            showed = QDesktopServices::openUrl(QUrl::fromLocalFile(path));
+        else
+        {
+            qWarning() << "Failed to execute script";
         }
     }
+#elif defined(Q_OS_MACOS)
+    if (MacosWrapper::revealInFinder(path))
+    {
+        return true;
+    }
+    else
+    {
+        qWarning() << "Failed reveal in Finder";
+    }
+#endif
 
-    return showed;
+    QUrl url;
+
+    if (fileInfo.isFile() || !fileInfo.exists())
+    {
+        url = QUrl::fromLocalFile(fileInfo.path());
+    }
+    else
+    {
+        url = QUrl::fromLocalFile(path);
+    }
+
+    if (!QDesktopServices::openUrl(url))
+    {
+        qCritical() << "Failed to open url:" << url;
+        return false;
+    }
+
+    return true;
 }

@@ -31,7 +31,7 @@ class ToolHelpManager : public OSWrapper
 {
 public:
     ToolHelpManager();
-    QList<OSProcessInfo> processes() override;
+    QList<OSProcessInfo> getProcesses() override;
 
     bool getIsAdministrator() const;
 

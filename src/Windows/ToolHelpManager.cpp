@@ -65,7 +65,7 @@ ToolHelpManager::ToolHelpManager()
     _rxInWindows.setCaseSensitivity(Qt::CaseSensitivity::CaseInsensitive);
 }
 
-QList<OSProcessInfo> ToolHelpManager::processes()
+QList<OSProcessInfo> ToolHelpManager::getProcesses()
 {
     _processes.clear();
 

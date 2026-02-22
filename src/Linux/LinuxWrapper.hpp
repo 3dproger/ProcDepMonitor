@@ -30,7 +30,7 @@ class LinuxWrapper : public OSWrapper
 {
 public:
     LinuxWrapper();
-    QList<OSProcessInfo> processes() override;
+    QList<OSProcessInfo> getProcesses() override;
     OSProcessInfo processByPIDImpl(int64_t pid) override;
 
 private:

@@ -56,11 +56,19 @@ void DialogSelectProcess::updateList()
     ui->tableWidgetProcesses->clearContents();
     ui->tableWidgetProcesses->setRowCount(0);
 
-    QList<OSProcessInfo> processes = OSWrapper::instance().processes();
+    bool includeDeps = false;
+
+#if defined(Q_OS_MAC)
+    includeDeps = false;
+#elif defined(Q_OS_WINDOWS) || defined(Q_OS_UNIX)
+    includeDeps = true;
+#endif
+
+    const auto processes = OSWrapper::instance().getProcesses(includeDeps);
 
     qDebug() << "Found processes:" << processes.count();
 
-    for (const OSProcessInfo& info : processes)
+    for (const auto& info : processes)
     {
         int row = ui->tableWidgetProcesses->rowCount();
         ui->tableWidgetProcesses->insertRow(row);
