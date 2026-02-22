@@ -33,16 +33,36 @@
 #include <QFileInfo>
 #include <QDir>
 #include <QUrl>
+#include <QOperatingSystemVersion>
 
 #ifdef Q_OS_MAC
 #include "Macos/MacosWrapper.h"
 #endif
+
+namespace
+{
+QString getShowInFMText()
+{
+    if (QOperatingSystemVersion::currentType() == QOperatingSystemVersion::OSType::Windows)
+    {
+        return QTranslator::tr("Show in Explorer");
+    }
+    else if (QOperatingSystemVersion::currentType() == QOperatingSystemVersion::OSType::MacOS)
+    {
+        return QTranslator::tr("Reveal in Finder");
+    }
+
+    return QTranslator::tr("Show in File Manager");
+}
+}
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    ui->btnShowInExplorer->setText(getShowInFMText());
 
     //Window icon (for Linux)
     setWindowIcon(QIcon(":/res/logo.svg"));
@@ -56,13 +76,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QAction* action;
 
-    QString showInGraphicalShellString;
-#if defined(Q_OS_WIN)
-    showInGraphicalShellString = tr("Show in Explorer");
-#else
-    showInGraphicalShellString = tr("Show in file manager");
-#endif
-    action = new QAction(showInGraphicalShellString, _itemContextMenu);
+    action = new QAction(getShowInFMText(), _itemContextMenu);
 
     connect(action, &QAction::triggered, this, &MainWindow::on_btnShowInExplorer_clicked);
     _itemContextMenu->addAction(action);
