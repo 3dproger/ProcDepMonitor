@@ -43,17 +43,17 @@ static const QSet<QString> Win32ExecutableExtentions = {
 
 void removeDuplicates(OSProcessInfo& info)
 {
-    for (int i = 0; i < info.dependencies.count();)
+    for (int i = 0; i < info.deps.count();)
     {
-        const OSProcessDependence dep = info.dependencies[i];
+        const OSProcessDependence dep = info.deps[i];
 
         bool removed = false;
-        for (int j = i + 1; j < info.dependencies.count(); j++)
+        for (int j = i + 1; j < info.deps.count(); j++)
         {
-            const OSProcessDependence dep2 = info.dependencies[j];
+            const OSProcessDependence dep2 = info.deps[j];
             if (dep == dep2)
             {
-                info.dependencies.removeAt(j);
+                info.deps.removeAt(j);
                 removed = true;
                 //qDebug() << "Removed duplicate" << dep2.fileName;
                 break;
@@ -104,7 +104,7 @@ OSProcessInfo OSWrapper::getProcessByPid(const int64_t pid, const bool includeDe
     OSProcessInfo info = processByPidImpl(pid, includeDeps);
     removeDuplicates(info);
 
-    for (OSProcessDependence& dep : info.dependencies)
+    for (OSProcessDependence& dep : info.deps)
     {
         dep.extention = extractExtension(dep.fileName);
 #if defined (Q_OS_WIN32)
@@ -112,7 +112,7 @@ OSProcessInfo OSWrapper::getProcessByPid(const int64_t pid, const bool includeDe
 #endif
     }
 
-    std::sort(info.dependencies.begin(), info.dependencies.end(), compareOSProcessDependence);
+    std::sort(info.deps.begin(), info.deps.end(), compareOSProcessDependence);
 
     return info;
 }
@@ -120,15 +120,15 @@ OSProcessInfo OSWrapper::getProcessByPid(const int64_t pid, const bool includeDe
 bool OSWrapper::compareOSProcessInfo(const OSProcessInfo &info1, const OSProcessInfo &info2)
 {
     //By canGetDependencies
-    if (info1.canGetDependencies && !info2.canGetDependencies)
+    if (info1.canGetDeps && !info2.canGetDeps)
     {
         return true;
     }
-    else if (!info1.canGetDependencies && info2.canGetDependencies)
+    else if (!info1.canGetDeps && info2.canGetDeps)
     {
         return false;
     }
-    else if (!info1.canGetDependencies && !info2.canGetDependencies)
+    else if (!info1.canGetDeps && !info2.canGetDeps)
     {
         #ifdef Q_OS_UNIX
         //By first chat '[' for UNIX only

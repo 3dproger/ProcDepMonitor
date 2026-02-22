@@ -145,7 +145,7 @@ void MainWindow::onPidSelected(int64_t pid)
                 .arg(info.name)
                 .arg(info.id));
 
-    for (const OSProcessDependence& dep : info.dependencies)
+    for (const OSProcessDependence& dep : info.deps)
     {
         if (ui->actionShow_only_existing_objects->isChecked() && !dep.info.exists())
         {

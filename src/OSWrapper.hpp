@@ -36,7 +36,9 @@ enum SpecialDirs
     WindowsSystem32,
     WindowsSysWOW64,
     Windows,
-    LinuxSymLinkDeleted
+    LinuxSymLinkDeleted,
+    OsxDotApp,
+    OsxSlashSystem,
 };
 
 struct OSProcessDependence
@@ -65,9 +67,9 @@ struct OSProcessInfo
     QString fileName;
     int64_t id = -1;
     bool valid = false;
-    bool canGetDependencies = false;
-
-    QList<OSProcessDependence> dependencies;
+    bool canGetDeps = false;
+    bool loadedDeps = false;
+    QList<OSProcessDependence> deps;
 };
 
 class OSWrapper

@@ -44,6 +44,7 @@ DialogSelectProcess::DialogSelectProcess(QWidget *parent) :
     ui->tableWidgetProcesses->setColumnWidth(0, 300);
     ui->tableWidgetProcesses->setColumnWidth(1, 100);
     ui->tableWidgetProcesses->setColumnWidth(2, 100);
+    ui->tableWidgetProcesses->setColumnWidth(3, 400);
 }
 
 DialogSelectProcess::~DialogSelectProcess()
@@ -77,15 +78,24 @@ void DialogSelectProcess::updateList()
         ui->tableWidgetProcesses->setItem(row, 1, new QTableWidgetItem(QString("%1").arg(info.id)));
 
 
-        if (info.canGetDependencies)
+        if (info.canGetDeps)
         {
-            ui->tableWidgetProcesses->setItem(row, 2, new QTableWidgetItem(QString("%1").arg(info.dependencies.count())));
+            if (info.loadedDeps)
+            {
+                ui->tableWidgetProcesses->setItem(row, 2, new QTableWidgetItem(tr("%1 found").arg(info.deps.count())));
+            }
+            else
+            {
+                ui->tableWidgetProcesses->setItem(row, 2, new QTableWidgetItem(tr("Has access")));
+            }
         }
         else
         {
             ui->tableWidgetProcesses->setItem(row, 2, new QTableWidgetItem(tr("No access")));
             ui->tableWidgetProcesses->item(row, 2)->setTextColor(QColor(255, 0, 0));
         }
+
+        ui->tableWidgetProcesses->setItem(row, 3, new QTableWidgetItem(info.fileName));
     }
 }
 

@@ -137,7 +137,8 @@ OSProcessInfo ToolHelpManager::_processByPID(int64_t pid)
     }
 
     info.valid = true;
-    info.canGetDependencies = true;
+    info.canGetDeps = true;
+    info.loadedDeps = true;
     //  Now walk the module list of the process,
     //  and display information about each module
     do
@@ -155,7 +156,7 @@ OSProcessInfo ToolHelpManager::_processByPID(int64_t pid)
 
         dep.specialDir = getSpecialDir(dep.fileName);
 
-        info.dependencies.append(dep);
+        info.deps.append(dep);
     }
     while(Module32Next(hModuleSnap, &me32));
 

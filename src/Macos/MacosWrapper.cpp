@@ -34,15 +34,29 @@ OSProcessInfo MacosWrapper::processByPidImpl(int64_t pid, const bool includeDeps
     OSProcessInfo info;
 
     info.id = pid;
-    info.name = getProcessPath(pid);
-    info.fileName = info.name;
+
+    const auto path = getProcessPath(pid);
+    QFileInfo fileInfo(path);
+
+    info.fileName = path;
+    info.name = fileInfo.fileName();
+
+    OsxProcessInfo osxInfo;
+    const auto validOsxInfo = getProcessInfo(pid, osxInfo);
+
     if (includeDeps)
     {
-        info.dependencies = getDeps(pid, info.canGetDependencies);
+        info.deps = getDeps(pid, info.canGetDeps);
+        info.loadedDeps = true;
+    }
+    else
+    {
+        info.canGetDeps = validOsxInfo;
+        info.loadedDeps = false;
     }
     info.valid = true;
 
-    qDebug() << info.id << info.name << ", found:" << info.dependencies.count();
+    qDebug() << info.id << info.name << ", found:" << info.deps.count();
 
     return info;
 }
@@ -119,6 +133,22 @@ QString MacosWrapper::getProcessPath(const pid_t pid)
     }
 
     return pathbuf;
+}
+
+bool MacosWrapper::getProcessInfo(const pid_t pid, OsxProcessInfo& result)
+{
+    result = OsxProcessInfo();
+
+    proc_bsdinfo info;
+    if (proc_pidinfo(pid, PROC_PIDTBSDINFO, 0, &info, sizeof(info)) <= 0)
+    {
+        return false;
+    }
+
+    result.pid = info.pbi_pid;
+    result.parentPid = info.pbi_ppid;
+
+    return true;
 }
 
 QList<OSProcessDependence> MacosWrapper::getDeps(const pid_t pid, bool& hasAccess)

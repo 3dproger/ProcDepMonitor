@@ -122,11 +122,12 @@ OSProcessInfo LinuxWrapper::processByPIDImpl(int64_t pid)
 
     if (mapFiles.isReadable())
     {
-        info.canGetDependencies = true;
+        info.canGetDeps = true;
+        info.loadedDeps = true;
 
-        const QFileInfoList& symlinks = mapFiles.entryInfoList(QDir::NoDotAndDotDot | QDir::System | QDir::Hidden);
+        const auto& symlinks = mapFiles.entryInfoList(QDir::NoDotAndDotDot | QDir::System | QDir::Hidden);
 
-        for (const QFileInfo& fileInfo : symlinks)
+        for (const auto& fileInfo : symlinks)
         {
             OSProcessDependence dep;
 
@@ -151,7 +152,7 @@ OSProcessInfo LinuxWrapper::processByPIDImpl(int64_t pid)
                 dep.valid = true;
             }
 
-            addDep(info.dependencies, dep);
+            addDep(info.deps, dep);
         }
     }
 
