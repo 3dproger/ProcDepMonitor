@@ -71,8 +71,9 @@ protected:
     static bool showInGraphicalShell(const QString &path);
 
 private:
+    void updateDepsList();
+
     Ui::MainWindow *ui;
-    I18nManager _i18n;
     DialogSelectProcess *_dialogSelectProcess = nullptr;
 
     QLabel* _labelStatus = nullptr;

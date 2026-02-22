@@ -26,6 +26,7 @@
 #define OSWRAPPER_HPP
 
 #include <QList>
+#include <QFileInfo>
 
 //Singleton class
 
@@ -40,6 +41,7 @@ enum SpecialDirs
 
 struct OSProcessDependence
 {
+    QFileInfo info;
     QString name;
     QString fileName;
     QString extention;

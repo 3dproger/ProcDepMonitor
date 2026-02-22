@@ -38,7 +38,7 @@ TEMPLATE = app
 # deprecated API in order to know how to port your code away from it.
 DEFINES += QT_DEPRECATED_WARNINGS
 
-TRANSLATIONS += app_ru.ts
+TRANSLATIONS +=
 RC_FILE = rc.rc
 
 #include(Utils/utils.pri)

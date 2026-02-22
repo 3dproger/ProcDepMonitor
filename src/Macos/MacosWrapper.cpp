@@ -136,6 +136,7 @@ QList<OSProcessDependence> MacosWrapper::getDeps(const pid_t pid, bool& hasAcces
             QFileInfo info(region);
 
             OSProcessDependence dep;
+            dep.info = info;
             dep.name = info.fileName();
             dep.fileName = region;
             dep.extention = info.suffix();

@@ -47,9 +47,6 @@ MainWindow::MainWindow(QWidget *parent) :
     //Window icon (for Linux)
     setWindowIcon(QIcon(":/res/logo.svg"));
 
-    //Fill the menu by language actions
-    ui->menuLanguage->addActions(_i18n.buildActions(ui->menuLanguage));
-
     ui->tableWidgetResult->setColumnWidth(0, 200);
     ui->tableWidgetResult->setColumnWidth(1, 450);
 
@@ -80,6 +77,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(action, &QAction::triggered, this, &MainWindow::copyName);
     _itemContextMenu->addAction(action);
 
+
+    connect(ui->actionShow_only_existing_objects, &QAction::triggered, this, &MainWindow::updateDepsList);
 }
 
 MainWindow::~MainWindow()
@@ -113,7 +112,6 @@ void MainWindow::changeEvent(QEvent *event){
     QMainWindow::changeEvent(event);
     if (event->type() == QEvent::LanguageChange) {
         ui->retranslateUi(this);
-        ui->menuLanguage->setIcon(_i18n.currentIcon());
         qDebug("Language changed");
     }
 }
@@ -149,6 +147,11 @@ void MainWindow::onPidSelected(int64_t pid)
 
     for (const OSProcessDependence& dep : info.dependencies)
     {
+        if (ui->actionShow_only_existing_objects->isChecked() && !dep.info.exists())
+        {
+            continue;
+        }
+
         int row = ui->tableWidgetResult->rowCount();
 
         ui->tableWidgetResult->insertRow(row);
@@ -280,7 +283,7 @@ void MainWindow::copyName()
 
 void MainWindow::on_btnUpdateList_clicked()
 {
-    onPidSelected(_pid);
+    updateDepsList();
 }
 
 bool MainWindow::showInGraphicalShell(const QString &path)
@@ -329,4 +332,9 @@ bool MainWindow::showInGraphicalShell(const QString &path)
     }
 
     return true;
+}
+
+void MainWindow::updateDepsList()
+{
+    onPidSelected(_pid);
 }

@@ -6,13 +6,13 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>783</width>
-    <height>300</height>
+    <width>786</width>
+    <height>541</height>
    </rect>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="2" column="0">
+    <item row="1" column="0">
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
        <widget class="QPushButton" name="btnShowInExplorer">
@@ -30,7 +30,7 @@
       <item>
        <spacer name="horizontalSpacer_2">
         <property name="orientation">
-         <enum>Qt::Horizontal</enum>
+         <enum>Qt::Orientation::Horizontal</enum>
         </property>
         <property name="sizeHint" stdset="0">
          <size>
@@ -53,7 +53,7 @@
       <item>
        <spacer name="horizontalSpacer">
         <property name="orientation">
-         <enum>Qt::Horizontal</enum>
+         <enum>Qt::Orientation::Horizontal</enum>
         </property>
         <property name="sizeHint" stdset="0">
          <size>
@@ -72,22 +72,22 @@
       </item>
      </layout>
     </item>
-    <item row="1" column="0">
+    <item row="0" column="0">
      <widget class="QTableWidget" name="tableWidgetResult">
       <property name="editTriggers">
-       <set>QAbstractItemView::NoEditTriggers</set>
+       <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
       </property>
       <property name="selectionMode">
-       <enum>QAbstractItemView::SingleSelection</enum>
+       <enum>QAbstractItemView::SelectionMode::SingleSelection</enum>
       </property>
       <property name="selectionBehavior">
-       <enum>QAbstractItemView::SelectRows</enum>
+       <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
       </property>
       <property name="verticalScrollMode">
-       <enum>QAbstractItemView::ScrollPerPixel</enum>
+       <enum>QAbstractItemView::ScrollMode::ScrollPerPixel</enum>
       </property>
       <property name="horizontalScrollMode">
-       <enum>QAbstractItemView::ScrollPerPixel</enum>
+       <enum>QAbstractItemView::ScrollMode::ScrollPerPixel</enum>
       </property>
       <property name="wordWrap">
        <bool>false</bool>
@@ -96,7 +96,7 @@
        <number>250</number>
       </attribute>
       <attribute name="verticalHeaderDefaultSectionSize">
-       <number>20</number>
+       <number>24</number>
       </attribute>
       <column>
        <property name="text">
@@ -117,8 +117,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>783</width>
-     <height>21</height>
+     <width>786</width>
+     <height>30</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -134,18 +134,15 @@
     <addaction name="actionAboutQt"/>
     <addaction name="actionAboutSoftware"/>
    </widget>
-   <widget class="QMenu" name="menuLanguage">
+   <widget class="QMenu" name="menuOptions">
     <property name="title">
-     <string>Language</string>
+     <string>Options</string>
     </property>
-    <property name="icon">
-     <iconset>
-      <normaloff>:/flags/16x16/ru.png</normaloff>:/flags/16x16/ru.png</iconset>
-    </property>
+    <addaction name="actionShow_only_existing_objects"/>
    </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuOptions"/>
    <addaction name="menuHelp"/>
-   <addaction name="menuLanguage"/>
   </widget>
   <action name="actionAboutSoftware">
    <property name="text">
@@ -190,6 +187,17 @@
    </property>
    <property name="toolTip">
     <string notr="true">English</string>
+   </property>
+  </action>
+  <action name="actionShow_only_existing_objects">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Show only existing objects</string>
    </property>
   </action>
  </widget>
