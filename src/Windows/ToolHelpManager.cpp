@@ -54,38 +54,37 @@ ToolHelpManager::ToolHelpManager()
     }
 }
 
-QList<OSProcessInfo> ToolHelpManager::getProcesses()
+QList<OSProcessInfo> ToolHelpManager::getProcesses(const bool includeDeps) const
 {
-    _processes.clear();
+    QList<OSProcessInfo> result;
+    const auto tasks = TaskListManager::getList();
 
-    QList<TaskListManager::Task> tasks = TaskListManager::getList();
-
-    for (const TaskListManager::Task& task : tasks)
+    for (const auto& task : tasks)
     {
-        OSProcessInfo info = _processByPID(uint32_t(task.processId));
+        auto info = _processByPID(uint32_t(task.processId), includeDeps);
 
         if (info.name.isEmpty())
         {
             info.name = task.processName;
         }
 
-        _processes.append(info);
+        result.append(info);
     }
 
-    std::sort(_processes.begin(), _processes.end(), OSWrapper::compareOSProcessInfo);
+    std::sort(result.begin(), result.end(), OSWrapper::compareOSProcessInfo);
 
-    return _processes;
+    return result;
 }
 
-OSProcessInfo ToolHelpManager::processByPIDImpl(int64_t pid)
+OSProcessInfo ToolHelpManager::processByPidImpl(const int64_t pid, const bool includeDeps) const
 {
-    OSProcessInfo info = _processByPID(pid);
+    auto info = _processByPID(pid, includeDeps);
 
     if (info.name.isEmpty())
     {
-        const QList<TaskListManager::Task>& tasks = TaskListManager::getList();
+        const auto& tasks = TaskListManager::getList();
 
-        for (const TaskListManager::Task& task : tasks)
+        for (const auto& task : tasks)
         {
             if (task.processId == info.id)
             {
@@ -98,7 +97,7 @@ OSProcessInfo ToolHelpManager::processByPIDImpl(int64_t pid)
     return info;
 }
 
-OSProcessInfo ToolHelpManager::_processByPID(int64_t pid)
+OSProcessInfo ToolHelpManager::_processByPID(const int64_t pid, const bool includeDeps)
 {
     OSProcessInfo info;
 
@@ -127,27 +126,36 @@ OSProcessInfo ToolHelpManager::_processByPID(int64_t pid)
 
     info.valid = true;
     info.canGetDeps = true;
-    info.loadedDeps = true;
-    //  Now walk the module list of the process,
-    //  and display information about each module
-    do
+
+    if (includeDeps)
     {
-        OSProcessDependence dep;
-
-        dep.valid = true;
-        dep.name = QString::fromWCharArray(me32.szModule);
-        dep.fileName = QString::fromWCharArray(me32.szExePath);
-
-        if (dep.fileName.startsWith("\\\\?\\"))
+        info.loadedDeps = true;
+        //  Now walk the module list of the process,
+        //  and display information about each module
+        do
         {
-            dep.fileName = dep.fileName.mid(4);
+            OSProcessDependence dep;
+
+            dep.valid = true;
+            dep.name = QString::fromWCharArray(me32.szModule);
+            dep.fileName = QString::fromWCharArray(me32.szExePath);
+            dep.info = QFileInfo(dep.fileName);
+
+            if (dep.fileName.startsWith("\\\\?\\"))
+            {
+                dep.fileName = dep.fileName.mid(4);
+            }
+
+            dep.specialDir = getSpecialDir(dep.fileName);
+
+            info.deps.append(dep);
         }
-
-        dep.specialDir = getSpecialDir(dep.fileName);
-
-        info.deps.append(dep);
+        while(Module32Next(hModuleSnap, &me32));
     }
-    while(Module32Next(hModuleSnap, &me32));
+    else
+    {
+        info.loadedDeps = false;
+    }
 
     //  Do not forget to clean up the snapshot object.
     CloseHandle(hModuleSnap);

@@ -1,29 +1,4 @@
-/*
- * MIT License
-
- * Copyright (c) 2020 Alexander Kirsanov
-
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
-
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
-
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- * */
-
-#ifndef TOOLHELPMANAGER_HPP
-#define TOOLHELPMANAGER_HPP
+#pragma once
 
 #include "OSWrapper.hpp"
 
@@ -31,20 +6,16 @@ class ToolHelpManager : public OSWrapper
 {
 public:
     ToolHelpManager();
-    QList<OSProcessInfo> getProcesses() override;
-
+    QList<OSProcessInfo> getProcesses(const bool includeDeps) const override;
     bool getIsAdministrator() const;
 
 protected:
-    OSProcessInfo processByPIDImpl(int64_t pid) override;
+    OSProcessInfo processByPidImpl(const int64_t pid, const bool includeDeps) const override;
 
 private:
-    static OSProcessInfo _processByPID(int64_t pid);
+    static OSProcessInfo _processByPID(const int64_t pid, const bool includeDeps);
     static SpecialDirs getSpecialDir(const QString& path);
     static void addDep(QList<OSProcessDependence>& list, const OSProcessDependence& dep);
 
-    QList<OSProcessInfo> _processes;
     bool _isAdministrator = false;
 };
-
-#endif // TOOLHELPMANAGER_HPP
