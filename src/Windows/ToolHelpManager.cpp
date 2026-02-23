@@ -68,6 +68,8 @@ QList<OSProcessInfo> ToolHelpManager::getProcesses(const bool includeDeps) const
             info.name = task.processName;
         }
 
+        info.fileName = getProcessPathByPid(task.processId);
+
         result.append(info);
     }
 
@@ -183,6 +185,34 @@ void ToolHelpManager::addDep(QList<OSProcessDependence> &list, const OSProcessDe
     {
         list.append(dep);
     }
+}
+
+QString ToolHelpManager::getProcessPathByPid(const int64_t pid)
+{
+    auto hProcess = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, FALSE, pid);
+    if (hProcess == NULL)
+    {
+        qCritical() << "OpenProcess failed. Error code:" << GetLastError();
+        return {};
+    }
+
+    TCHAR path[MAX_PATH];
+    DWORD pathSize = MAX_PATH;
+
+    QString result;
+
+    if (QueryFullProcessImageName(hProcess, 0, path, &pathSize))
+    {
+        result = QString::fromWCharArray(path, pathSize);
+    }
+    else
+    {
+        qCritical() << "QueryFullProcessImageName failed. Error code:" << GetLastError();
+    }
+
+    CloseHandle(hProcess);
+
+    return result;
 }
 
 SpecialDirs ToolHelpManager::getSpecialDir(const QString &path)
