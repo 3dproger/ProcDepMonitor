@@ -3,9 +3,6 @@ Comfortable cross-platform process dependency monitor with GUI based on Qt. Usef
 
 <p align="center">
   <br>
-  <img src="misc/screenshot-linux-1.png">
-  <br>
-  <br>
-  <img src="misc/screenshot1.png">
+  <img src="misc/screenshot-macos.png">
 </p>
 
