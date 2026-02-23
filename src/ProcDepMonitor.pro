@@ -44,10 +44,6 @@ RC_FILE = rc.rc
 #include(Utils/utils.pri)
 include(I18nManager/I18nManager.pri)
 
-unix{
-    TARGET=procdepmonitor
-}
-
 # You can also make your code fail to compile if you use deprecated APIs.
 # In order to do so, uncomment the following line.
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
@@ -70,6 +66,8 @@ SOURCES += \
         mainwindow.cpp
 
 unix:!macx {
+TARGET=procdepmonitor
+
 HEADERS += \
         Linux/LinuxWrapper.hpp
 
@@ -78,13 +76,14 @@ SOURCES += \
 }
 
 macx {
+TARGET=ProcDepMonitor
+ICON = logo.icns
+
 HEADERS += \
         Macos/MacosWrapper.h
 
 SOURCES += \
         Macos/MacosWrapper.cpp
-
-ICON = logo.icns
 }
 
 win32 {
@@ -154,7 +153,7 @@ RESOURCES += res.qrc
             DESTDIR = $$_PRO_FILE_PWD_/../deploy/macx/x86_64
         }
 
-        QMAKE_POST_LINK = $$(QTDIR)/bin/macdeployqt $$DESTDIR/procdepmonitor.app -dmg -qmldir=$$(QTDIR)/qml -always-overwrite
+        QMAKE_POST_LINK = $$(QTDIR)/bin/macdeployqt $$DESTDIR/ProcDepMonitor.app -dmg -qmldir=$$(QTDIR)/qml -always-overwrite
 
         message("Release building for MacOS will be in \""$$DESTDIR"\"")
     }
