@@ -39,18 +39,11 @@ protected:
     OSProcessInfo processByPIDImpl(int64_t pid) override;
 
 private:
-    OSProcessInfo _processByPID(int64_t pid);
+    static OSProcessInfo _processByPID(int64_t pid);
+    static SpecialDirs getSpecialDir(const QString& path);
+    static void addDep(QList<OSProcessDependence>& list, const OSProcessDependence& dep);
 
     QList<OSProcessInfo> _processes;
-
-    void addDep(QList<OSProcessDependence>& list, const OSProcessDependence& dep);
-
-    SpecialDirs getSpecialDir(const QString& path);
-
-    QRegExp _rxInSystem32;
-    QRegExp _rxInSysWOW64;
-    QRegExp _rxInWindows;
-
     bool _isAdministrator = false;
 };
 

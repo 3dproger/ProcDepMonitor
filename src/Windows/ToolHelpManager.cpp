@@ -52,17 +52,6 @@ ToolHelpManager::ToolHelpManager()
     {
         qDebug("Started without administrator privileges");
     }
-
-
-    //RX
-    _rxInSystem32 = QRegExp("[cC]:[\\\\/]windows[\\\\/]system32[\\\\/].+");
-    _rxInSystem32.setCaseSensitivity(Qt::CaseSensitivity::CaseInsensitive);
-
-    _rxInSysWOW64 = QRegExp("[cC]:[\\\\/]windows[\\\\/]syswow64[\\\\/].+");
-    _rxInSysWOW64.setCaseSensitivity(Qt::CaseSensitivity::CaseInsensitive);
-
-    _rxInWindows = QRegExp("[cC]:[\\\\/]windows[\\\\/].+");
-    _rxInWindows.setCaseSensitivity(Qt::CaseSensitivity::CaseInsensitive);
 }
 
 QList<OSProcessInfo> ToolHelpManager::getProcesses()
@@ -119,7 +108,7 @@ OSProcessInfo ToolHelpManager::_processByPID(int64_t pid)
     MODULEENTRY32 me32;
 
     //Take a snapshot of all modules in the specified process.
-    hModuleSnap = CreateToolhelp32Snapshot (TH32CS_SNAPMODULE | TH32CS_SNAPMODULE32, uint32_t(pid));
+    hModuleSnap = CreateToolhelp32Snapshot(TH32CS_SNAPMODULE | TH32CS_SNAPMODULE32, uint32_t(pid));
     if (hModuleSnap == INVALID_HANDLE_VALUE)
     {
         return info;
@@ -190,15 +179,24 @@ void ToolHelpManager::addDep(QList<OSProcessDependence> &list, const OSProcessDe
 
 SpecialDirs ToolHelpManager::getSpecialDir(const QString &path)
 {
-    if (_rxInSystem32.indexIn(path) != -1)
+    static QRegExp rxInSystem32("[cC]:[\\\\/]windows[\\\\/]system32[\\\\/].+");
+    rxInSystem32.setCaseSensitivity(Qt::CaseSensitivity::CaseInsensitive);
+
+    static QRegExp rxInSysWOW64("[cC]:[\\\\/]windows[\\\\/]syswow64[\\\\/].+");
+    rxInSysWOW64.setCaseSensitivity(Qt::CaseSensitivity::CaseInsensitive);
+
+    static QRegExp rxInWindows("[cC]:[\\\\/]windows[\\\\/].+");
+    rxInWindows.setCaseSensitivity(Qt::CaseSensitivity::CaseInsensitive);
+
+    if (rxInSystem32.indexIn(path) != -1)
     {
         return SpecialDirs::WindowsSystem32;
     }
-    else if (_rxInSysWOW64.indexIn(path) != -1)
+    else if (rxInSysWOW64.indexIn(path) != -1)
     {
         return SpecialDirs::WindowsSysWOW64;
     }
-    else if (_rxInWindows.indexIn(path) != -1)
+    else if (rxInWindows.indexIn(path) != -1)
     {
         return SpecialDirs::Windows;
     }
