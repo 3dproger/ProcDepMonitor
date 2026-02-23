@@ -104,9 +104,9 @@ FORMS += \
 RESOURCES += res.qrc
 
 #Раздел, в котором указываем директории, в которых хранятся собранные и промежуточные файлы
-CONFIG(debug, debug|release) {
+#CONFIG(debug, debug|release) {
     #debug
-} else {
+#} else {
     #release - выпуск
     #В режиме выпуска необходимо так же собрать нужные библиотеки рядом с исполнительным файлом
 
@@ -132,7 +132,7 @@ CONFIG(debug, debug|release) {
         message("Release building for Windows will be in \""$$DESTDIR"\"")
     }
 
-    unix {
+    unix:!macx {
         contains(QT_ARCH, i386) {
             #Для Windows x32
             DESTDIR = $$_PRO_FILE_PWD_/../deploy/unix/i386/appdir/usr/bin
@@ -144,12 +144,19 @@ CONFIG(debug, debug|release) {
         message("Release building for Linux will be in \""$$DESTDIR"\"")
         #ToDo: реализовать вызов linuxdeployqt
     }
+
     macx {
-        message("Building for macx")
-        DESTDIR = $$_PRO_FILE_PWD_/../deploy/macx
-        #ToDo: реализовать вызов macdeployqt
+        contains(QT_ARCH, arm64) {
+            DESTDIR = $$_PRO_FILE_PWD_/../deploy/macx/arm64
+        } else {
+            DESTDIR = $$_PRO_FILE_PWD_/../deploy/macx/x86_64
+        }
+
+        QMAKE_POST_LINK = $$(QTDIR)/bin/macdeployqt $$DESTDIR/procdepmonitor.app -dmg -qmldir=$$(QTDIR)/qml -always-overwrite
+
+        message("Release building for MacOS will be in \""$$DESTDIR"\"")
     }
-}
+#}
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

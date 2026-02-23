@@ -92,7 +92,7 @@ void DialogSelectProcess::updateList()
         else
         {
             ui->tableWidgetProcesses->setItem(row, 2, new QTableWidgetItem(tr("No access")));
-            ui->tableWidgetProcesses->item(row, 2)->setTextColor(QColor(255, 0, 0));
+            ui->tableWidgetProcesses->item(row, 2)->setForeground(QColor(255, 0, 0));
         }
 
         ui->tableWidgetProcesses->setItem(row, 3, new QTableWidgetItem(info.fileName));

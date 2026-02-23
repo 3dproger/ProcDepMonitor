@@ -201,14 +201,14 @@ void MainWindow::onPidSelected(int64_t pid)
 
         if (textColor.isValid())
         {
-            itemName->setTextColor(textColor);
-            itemPath->setTextColor(textColor);
+            itemName->setForeground(textColor);
+            itemPath->setForeground(textColor);
         }
 
         if (dep.executable)
         {
-            itemName->setBackgroundColor(QColor(255, 224, 178));
-            itemPath->setBackgroundColor(QColor(255, 224, 178));
+            itemName->setBackground(QColor(255, 224, 178));
+            itemPath->setBackground(QColor(255, 224, 178));
         }
 
         ui->tableWidgetResult->setItem(row, 0, itemName);
