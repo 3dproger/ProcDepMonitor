@@ -32,9 +32,9 @@ int main(int argc, char *argv[])
 
     //Application information
     QApplication::setApplicationName("Process Dependency Monitor");
-    QApplication::setOrganizationName("Alexander Kirsanov");
+    QApplication::setOrganizationName("3dproger");
     QApplication::setOrganizationDomain("https://github.com/3dproger");
-    QApplication::setApplicationVersion("1.2.0");
+    QApplication::setApplicationVersion("1.3.0");
 
     MainWindow w;
     w.show();
