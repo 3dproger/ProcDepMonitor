@@ -28,7 +28,7 @@
 ; App short name
 #define   NameShort  "ProcDepMonitor"
 ; App version
-#define   Version    "1.2.0"
+#define   Version    "1.3.0"
 ; Author        
 #define   Publisher  "3dproger"
 ; Author URL
@@ -87,7 +87,6 @@ Name: fi; MessagesFile: "compiler:Languages\Finnish.isl"; LicenseFile: "../../..
 Name: fr; MessagesFile: "compiler:Languages\French.isl"; LicenseFile: "../../../LICENSE" 
 Name: de; MessagesFile: "compiler:Languages\German.isl"; LicenseFile: "../../../LICENSE" 
 Name: il; MessagesFile: "compiler:Languages\Hebrew.isl"; LicenseFile: "../../../LICENSE"
-Name: is; MessagesFile: "compiler:Languages\Icelandic.isl"; LicenseFile: "../../../LICENSE"
 Name: it; MessagesFile: "compiler:Languages\Italian.isl"; LicenseFile: "../../../LICENSE"
 Name: jp; MessagesFile: "compiler:Languages\Japanese.isl"; LicenseFile: "../../../LICENSE"  
 Name: no; MessagesFile: "compiler:Languages\Norwegian.isl"; LicenseFile: "../../../LICENSE" 
