@@ -83,6 +83,8 @@ HEADERS += \
 
 SOURCES += \
         Macos/MacosWrapper.cpp
+
+ICON = logo.icns
 }
 
 win32 {
